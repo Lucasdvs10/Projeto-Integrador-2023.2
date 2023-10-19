@@ -1,5 +1,6 @@
 import abc
 import re
+from typing import Optional
 
 from src.shared.domain.enums.state_enum import STATE
 from src.shared.helpers.errors.domain_errors import EntityError
@@ -10,7 +11,7 @@ class User(abc.ABC):
     email: str
     state: STATE
     MIN_NAME_LENGTH = 2
-    user_id: int
+    user_id: Optional[int]
 
     def __init__(self, name: str, email: str, state: STATE, user_id: int = None):
         if not User.validate_name(name):
