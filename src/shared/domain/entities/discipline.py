@@ -34,6 +34,8 @@ class Discipline:
 
     @name.setter
     def name(self, value):
+        if value is None:
+            return
         if type(value) != str:
             raise EntityParameterTypeError("name")
         self._name = value
@@ -44,6 +46,8 @@ class Discipline:
 
     @discipline_id.setter
     def discipline_id(self, value):
+        if value is None:
+            return
         if type(value) != str:
             raise EntityParameterTypeError("Discipline ID")
         self._discipline_id = value
@@ -54,6 +58,9 @@ class Discipline:
 
     @year.setter
     def year(self, value):
+
+        if value is None:
+            return
         if type(value) != int:
             raise EntityParameterTypeError("year")
         self._year = value
@@ -64,6 +71,8 @@ class Discipline:
 
     @students_emails_list.setter
     def students_emails_list(self, value):
+        if value is None:
+            return
         if type(value) != list:
             raise EntityParameterTypeError("students_emails_list")
         self._students_emails_list = value

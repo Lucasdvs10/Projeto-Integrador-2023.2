@@ -23,6 +23,8 @@ class Test_Discipline:
         with(pytest.raises(EntityParameterTypeError)):
             discipline.name = 42
 
+
+
     def test_change_discipline_id(self):
         discipline = Discipline("Calculo", "aisdjasdjiou", 2023, [])
 

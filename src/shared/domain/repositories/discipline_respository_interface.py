@@ -11,13 +11,13 @@ class IDisciplineRespository:
         pass
 
     @abc.abstractmethod
-    def get_discipline_by_id(self, discipline_id: str) -> Discipline:
+    def get_discipline_by_id(self, discipline_id: str) -> Optional[Discipline]:
         pass
 
     @abc.abstractmethod
-    def update_discipline_by_id(self, discipline_id: str, new_name: Optional[str], new_year: Optional[int], new_students_list: Optional[str]) -> Discipline:
+    def update_discipline_by_id(self, discipline_id: str, new_name: Optional[str], new_year: Optional[int], new_students_list: Optional[str]) -> Optional[Discipline]:
         pass
 
     @abc.abstractmethod
-    def delete_discipline(self, discipline_id) -> Discipline:
+    def delete_discipline(self, discipline_id) -> Optional[Discipline]:
         pass
