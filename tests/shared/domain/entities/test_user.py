@@ -1,41 +1,89 @@
-from src.shared.domain.entities.user import User
-from src.shared.domain.enums.state_enum import STATE
-from src.shared.helpers.errors.domain_errors import EntityError
 import pytest
 
+from src.shared.domain.entities.user import User
+from src.shared.domain.enums.role_enum import ROLE
+from src.shared.helpers.errors.domain_errors import EntityParameterTypeError
 
 class Test_User:
-    def test_user(self):
-        User(name="VITOR", email="21.01444-2@maua.br", user_id=1, state=STATE.APPROVED)
+    def test_instantiate_user(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        assert user
+        
+    def test_change_user_email(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        user.email = "outroemail@maua.br"
 
-    def test_user_name_is_none(self):
-        with pytest.raises(EntityError):
-            User(name=None, email="21.01444-2@maua.br", user_id=1, state=STATE.APPROVED)
+        assert user.email == "outroemail@maua.br"
+        
+    def test_change_user_email_to_a_invalid_one(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        with(pytest.raises(EntityParameterTypeError)):
+            user.email = "outroemailmaua.br"
+            
+    def test_change_user_name(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        user.name = "Outro nome"
 
-    def test_user_name_is_not_str(self):
-        with pytest.raises(EntityError):
-            User(name=1, email="21.01444-2@maua.br", user_id=1, state=STATE.APPROVED)
-
-    def test_user_name_is_shorter_than_min_length(self):
-        with pytest.raises(EntityError):
-            User(name="V", email="21.01444-2@maua.br", user_id=1, state=STATE.APPROVED)
-
-    def test_user_email_is_none(self):
-        with pytest.raises(EntityError):
-            User(name="VITOR", email=None, user_id=1, state=STATE.APPROVED)
-
-    def test_user_email_is_not_valid(self):
-        with pytest.raises(EntityError):
-            User(name="VITOR", email="21.01444-2maua.br", user_id=1, state=STATE.APPROVED)
-
-    def test_user_user_id_is_not_int(self):
-        with pytest.raises(EntityError):
-            User(name="VITOR", email="21.01444-2@maua.br", user_id="1", state=STATE.APPROVED)
-
-    def test_user_user_id_is_negative(self):
-        with pytest.raises(EntityError):
-            User(name="VITOR", email="21.01444-2@maua.br", user_id=-1, state=STATE.APPROVED)
-
-    def test_user_state_is_not_sate_enum(self):
-        with pytest.raises(EntityError):
-            User(name="VITOR", email="21.01444-2@maua.br", user_id=1, state="APPROVED")
+        assert user.name == "Outro nome"
+        
+    def test_change_user_name_to_a_invalid_one(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        with(pytest.raises(EntityParameterTypeError)):
+            user.name = 42
+            
+    def test_change_user_role(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        user.role = ROLE.STUDENT
+        
+        assert user.role == ROLE.STUDENT
+        
+    def test_change_user_role_to_a_invalid_one(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        with(pytest.raises(EntityParameterTypeError)):
+            user.role = "Monitor"
+            
+    def test_change_user_password(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        user.password = "Outra senha"
+        
+        assert user.password == "Outra senha"
+        
+    def test_change_user_password_to_a_invalid_one(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        with(pytest.raises(EntityParameterTypeError)):
+            user.password = 42
+            
+    def test_change_user_disciplines_list(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        user.disciplines = [1,2,3]
+        
+        assert user.disciplines == [1,2,3]
+        
+    def test_change_user_disciplines_list_to_a_invalid_one(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        with(pytest.raises(EntityParameterTypeError)):
+            user.disciplines = "Uma lista em string"
+            
+    def test_change_user_exercises_solved_list(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        user.exercises_solved = [1,2,3]
+        
+        assert user.exercises_solved == [1,2,3]
+        
+    def test_change_user_exercises_solved_list_to_a_invalid_one(self):
+        user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", disciplines=[], exercises_solved=[])
+        
+        with(pytest.raises(EntityParameterTypeError)):
+            user.exercises_solved = "Uma lista em string"
