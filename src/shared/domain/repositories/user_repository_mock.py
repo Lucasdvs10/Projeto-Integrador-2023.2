@@ -18,6 +18,9 @@ class UserRepositoryMock(IUserRepository):
     def update_user_by_email(self, email: str, new_name: Optional[str] = None, new_role: Optional[str] = None, new_password: Optional[str] = None, new_exercises_solved: Optional[list] = None):
         user = self.get_user_by_email(email)
         
+        if user is None:
+            return None
+        
         if new_name:
             user.name = new_name
         if new_role:
