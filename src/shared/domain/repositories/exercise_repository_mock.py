@@ -8,19 +8,17 @@ class ExerciseRepositoryMock(IExerciseRepository):
     def __init__(self) -> None:
         self.all_exercises = [
                 Exercise(exercise_id="111-111-111",
-                         discipline_id="777-888-999",
                          title="Primeiro Presidente do Brasil",
                          enunciado="Quem foi o primeiro presidente do Brasil?",
                          creation_date=datetime(2023, 1,10),
-                         exipiration_date=datetime(2023, 2, 10),
+                         expiration_date=datetime(2023, 2, 10),
                          correct_answer="Marechal Deodoro"
                          ),
                 Exercise(exercise_id="111-222-111",
-                         discipline_id="777-888-l01010",
                          title="Qual lingua é mais antiga",
                          enunciado="Qual lingua é mais antiga: Python ou java",
                          creation_date=datetime(2023, 1,10),
-                         exipiration_date=datetime(2023, 2, 11),
+                         expiration_date=datetime(2023, 2, 11),
                          correct_answer="Python"
                          )
         ]
