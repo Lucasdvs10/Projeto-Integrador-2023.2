@@ -10,11 +10,11 @@ class IExerciseRepository:
         pass
 
     @abstractmethod
-    def get_exercise_by_id(self, id: str) -> Optional[Exercise]:
+    def get_exercise_by_id(self, exercise_id: str) -> Optional[Exercise]:
         pass
 
     @abstractmethod
-    def update_exercise_by_id(self) -> Optional[Exercise]:
+    def update_exercise_by_id(self, exercise_id: str, new_title: Optional[str] = None, new_enunciado: Optional[str] = None, new_creation_date: Optional[int] = None, new_expiration_date: Optional[int] = None, new_correct_answer: Optional[str] = None) -> Optional[Exercise]:
         pass
 
     @abstractmethod
