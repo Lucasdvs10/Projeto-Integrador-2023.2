@@ -9,7 +9,7 @@ class IUserRepository:
         pass
     
     @abc.abstractmethod
-    def update_user_by_email(self, email: str, new_name: Optional[str], new_role: Optional[str], new_password: Optional[str], new_disciplines: Optional[list], new_exercises_solved: Optional[list]):
+    def update_user_by_email(self, email: str, new_name: Optional[str] = None, new_role: Optional[str] = None, new_password: Optional[str] = None, new_exercises_solved: Optional[list] = None):
         pass
     
     @abc.abstractmethod
