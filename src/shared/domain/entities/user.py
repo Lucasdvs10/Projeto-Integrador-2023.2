@@ -11,14 +11,13 @@ class User:
     _name: str
     _role: ROLE
     _password: str
-    _disciplines : List[str] # List of discipline ids
     _exercises_solved : List[str] # List of exercise ids
     NAME_MIN_LENGTH = 3
     NAME_MAX_LENGTH = 255
     PASSWORD_MIN_LENGTH = 8
     PASSWORD_MAX_LENGTH = 255
     
-    def __init__(self, email, name, role, password, disciplines, exercises_solved):
+    def __init__(self, email, name, role, password, exercises_solved):
         if not self.validate_email(email):
             raise EntityParameterTypeError("email")
         self._email = email
@@ -40,12 +39,6 @@ class User:
         if not self.PASSWORD_MIN_LENGTH <= len(password) <= self.PASSWORD_MAX_LENGTH:
             raise ValueError(f"Password must be between {self.PASSWORD_MIN_LENGTH} and {self.PASSWORD_MAX_LENGTH} characters long")
         self._password = password
-        
-        if type(disciplines) != list:
-            raise EntityParameterTypeError("disciplines")
-        # if not all(Discipline.validate_id(discipline_id) for discipline_id in disciplines):
-        #     raise ValueError("Invalid discipline id")
-        self._disciplines = disciplines
         
         if type(exercises_solved) != list:
             raise EntityParameterTypeError("exercises_solved")
@@ -98,18 +91,6 @@ class User:
         if not self.PASSWORD_MIN_LENGTH <= len(value) <= self.PASSWORD_MAX_LENGTH:
             raise ValueError(f"Password must be between {self.PASSWORD_MIN_LENGTH} and {self.PASSWORD_MAX_LENGTH} characters long")
         self._password = value
-        
-    @property
-    def disciplines(self):
-        return self._disciplines
-    
-    @disciplines.setter
-    def disciplines(self, value):
-        if type(value) != list:
-            raise EntityParameterTypeError("disciplines")
-        # if not all(Discipline.validate_id(discipline_id) for discipline_id in value):
-        #     raise ValueError("Invalid discipline id")
-        self._disciplines = value
         
     @property
     def exercises_solved(self):
