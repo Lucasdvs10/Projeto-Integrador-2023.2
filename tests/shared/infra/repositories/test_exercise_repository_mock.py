@@ -1,5 +1,5 @@
 from src.shared.domain.entities.exercise import Exercise
-from src.shared.domain.repositories.exercise_repository_mock import ExerciseRepositoryMock
+from src.shared.infra.repositories.exercise_repository_mock import ExerciseRepositoryMock
 
 
 class Test_ExerciseRepositoryMock:
