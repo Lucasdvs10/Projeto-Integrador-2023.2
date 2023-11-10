@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi import HTTPException, status
 from fastapi.responses import JSONResponse
+from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
 
 from src.modules.get_schedule.app.get_schedule_presenter import get_shedule_presenter
 from src.modules.update_schedule.app.update_schedule_presenter import update_schedule_presenter
@@ -34,5 +35,13 @@ def update_schedule(data: dict = None):
       }
     
   response = update_schedule_presenter(event, None)
+  
+  return response
+
+@app.get("/get_ranking")
+def get_ranking():
+  event = {}
+  
+  response = get_ranking_presenter(event, None)
   
   return response
