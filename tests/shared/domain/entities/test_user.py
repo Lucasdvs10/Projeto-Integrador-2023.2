@@ -65,9 +65,9 @@ class Test_User:
     def test_change_user_exercises_solved_list(self):
         user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", exercises_solved=[])
         
-        user.exercises_solved = [1,2,3]
+        user.exercises_solved = ["1", "2", "3"]
         
-        assert user.exercises_solved == [1,2,3]
+        assert user.exercises_solved == ["1", "2", "3"]
         
     def test_change_user_exercises_solved_list_to_a_invalid_one(self):
         user = User(email="22.01102-0@maua.br", name="João", role=ROLE.MONITOR, password="Teste123", exercises_solved=[])
