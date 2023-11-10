@@ -98,23 +98,27 @@ class User:
         #     raise ValueError("Invalid exercise id")
         self._exercises_solved = value
      
-    def validate_email(self, email):
+    @staticmethod
+    def validate_email(email):
         if type(email) != str:
             return False
         regex = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
         return bool(re.fullmatch(regex, email))
     
-    def validate_name(self, name):
+    @staticmethod
+    def validate_name(name):
         if type(name) != str:
             return False
-        return self.NAME_MIN_LENGTH <= len(name) <= self.NAME_MAX_LENGTH
+        return User.NAME_MIN_LENGTH <= len(name) <= User.NAME_MAX_LENGTH
     
-    def validate_role(self, role):
+    @staticmethod
+    def validate_role(role):
         if type(role) != ROLE:
             return False
         return role in ROLE
     
-    def validate_password(self, password):
+    @staticmethod
+    def validate_password(password):
         if type(password) != str:
             return False
-        return self.PASSWORD_MIN_LENGTH <= len(password) <= self.PASSWORD_MAX_LENGTH
+        return User.PASSWORD_MIN_LENGTH <= len(password) <= User.PASSWORD_MAX_LENGTH
