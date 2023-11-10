@@ -7,6 +7,7 @@ from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presen
 from src.modules.get_schedule.app.get_schedule_presenter import get_shedule_presenter
 from src.modules.get_user.app.get_user_presenter import get_user_presenter
 from src.modules.update_schedule.app.update_schedule_presenter import update_schedule_presenter
+from src.modules.update_user.app.update_user_presenter import update_user_presenter
 
 app = FastAPI()
 
@@ -81,5 +82,26 @@ def get_user(email: str = None):
   }
   
   response = get_user_presenter(request, None)
+  
+  return response
+
+@app.patch("/update_user")
+def update_user(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  event = {
+    "body": {
+        k: str(v) for k, v in data.items()
+    }
+  }
+  
+  for key in data.keys():
+    if type(data[key]) == dict:
+      event["body"][key] = {
+        k: str(v) for k, v in data[key].items()
+      }
+    
+  response = update_user_presenter(event, None)
   
   return response
