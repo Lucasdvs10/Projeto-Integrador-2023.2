@@ -36,6 +36,7 @@ class UserRepositoryMock(IUserRepository):
         for user in self._users:
             if user.email == email:
                 return user
+        return None
     
     def delete_user_by_email(self, email: str):
         user = self.get_user_by_email(email)
