@@ -1,5 +1,5 @@
-from src.modules.get_ranking.app.get_ranking_controller import GetRankingController
-from src.modules.get_ranking.app.get_ranking_usecase import GetRankingUsecase
+from .get_ranking_controller import GetRankingController
+from .get_ranking_usecase import GetRankingUsecase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
 from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
 
