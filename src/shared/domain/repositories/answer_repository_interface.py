@@ -15,5 +15,5 @@ class IAnswerRepository:
     pass
   
   @abc.abstractmethod
-  def update_schedule(self, schedule: Schedule):
+  def update_schedule(self, new_url: str) -> Schedule:
     pass
