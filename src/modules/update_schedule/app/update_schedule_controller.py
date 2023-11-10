@@ -1,11 +1,8 @@
-from src.modules.update_schedule.app.update_schedule_usecase import UpdateScheduleUsecase
-from src.modules.update_schedule.app.update_schedule_viewmodel import UpdateScheduleViewmodel
-from src.shared.helpers.errors.controller_errors import MissingParameters
-from src.shared.helpers.errors.domain_errors import EntityError
-from src.shared.helpers.external_interfaces.http_codes import OK, BadRequest, InternalServerError
+from .update_schedule_usecase import UpdateScheduleUsecase
+from .update_schedule_viewmodel import UpdateScheduleViewmodel
+from src.shared.helpers.external_interfaces.http_codes import OK
 from src.shared.helpers.external_interfaces.http_models import HttpRequest, HttpResponse
 from fastapi import HTTPException, status
-from fastapi.responses import JSONResponse
 import re
 
 

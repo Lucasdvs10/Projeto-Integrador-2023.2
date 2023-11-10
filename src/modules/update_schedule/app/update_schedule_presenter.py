@@ -1,5 +1,5 @@
-from src.modules.update_schedule.app.update_schedule_controller import UpdateScheduleController
-from src.modules.update_schedule.app.update_schedule_usecase import UpdateScheduleUsecase
+from .update_schedule_controller import UpdateScheduleController
+from .update_schedule_usecase import UpdateScheduleUsecase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
 from src.shared.infra.repositories.answer_repository_mock import AnswerRepositoryMock
 
