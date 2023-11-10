@@ -20,5 +20,7 @@ class Test_CreateUserUsecase:
         repo = UserRepositoryMock()
         usecase = CreateUserUsecase(repo)
         email = repo.get_all_users()[0].email
-        with pytest.raises(HTTPException):
+        with pytest.raises(HTTPException) as exc:
             usecase(email=email, name="Albert Einstein", role=ROLE.STUDENT, password="12345678")
+        assert exc.value.status_code == 409
+        assert exc.value.detail == "Email already registered"
