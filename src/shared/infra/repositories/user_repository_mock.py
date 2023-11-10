@@ -7,8 +7,8 @@ class UserRepositoryMock(IUserRepository):
     def __init__(self):
         self._users = [
             User(email="22.01102-0@maua.br", name="Luigi Trevisan", role=ROLE.MONITOR, password="ebdf496f67651cddf6aaa1f0b130f1b99ce9e2e93dc2503d926edcff15aee668", exercises_solved=[]),
-            User(email="22.01049-0@maua.br", name="Vitor Negresiolo", role=ROLE.STUDENT, password="ebdf496f67651cddf6aaa1f0b130f1b99ce9e2e93dc2503d926edcff15aee668", exercises_solved=[]),
-            User(email="22.00680-0@maua.br", name="Rodrigo Siqueira", role=ROLE.STUDENT, password="ebdf496f67651cddf6aaa1f0b130f1b99ce9e2e93dc2503d926edcff15aee668", exercises_solved=[])
+            User(email="22.01049-0@maua.br", name="Vitor Negresiolo", role=ROLE.STUDENT, password="ebdf496f67651cddf6aaa1f0b130f1b99ce9e2e93dc2503d926edcff15aee668", exercises_solved=[1, 2, 3]),
+            User(email="22.00680-0@maua.br", name="Rodrigo Siqueira", role=ROLE.STUDENT, password="ebdf496f67651cddf6aaa1f0b130f1b99ce9e2e93dc2503d926edcff15aee668", exercises_solved=[1, 2])
         ]
     
     def create_user(self, user: User):
@@ -36,8 +36,12 @@ class UserRepositoryMock(IUserRepository):
         for user in self._users:
             if user.email == email:
                 return user
+        return None
     
     def delete_user_by_email(self, email: str):
         user = self.get_user_by_email(email)
         self._users.remove(user)
         return user
+    
+    def get_all_users(self):
+        return self._users

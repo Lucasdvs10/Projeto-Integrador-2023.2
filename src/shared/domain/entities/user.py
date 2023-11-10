@@ -22,22 +22,16 @@ class User:
             raise EntityParameterTypeError("email")
         self._email = email
         
-        if type(name) != str:
+        if not self.validate_name(name):
             raise EntityParameterTypeError("name")
-        if not self.NAME_MIN_LENGTH <= len(name) <= self.NAME_MAX_LENGTH:
-            raise ValueError(f"Name must be between {self.NAME_MIN_LENGTH} and {self.NAME_MAX_LENGTH} characters long")
         self._name = name
         
-        if type(role) != ROLE:
+        if not self.validate_role(role):
             raise EntityParameterTypeError("role")
-        if role not in ROLE:
-            raise ValueError(f"Role must be one of {ROLE}")
         self._role = role
 
-        if type(password) != str:
+        if not self.validate_password(password):
             raise EntityParameterTypeError("password")
-        if not self.PASSWORD_MIN_LENGTH <= len(password) <= self.PASSWORD_MAX_LENGTH:
-            raise ValueError(f"Password must be between {self.PASSWORD_MIN_LENGTH} and {self.PASSWORD_MAX_LENGTH} characters long")
         self._password = password
         
         if type(exercises_solved) != list:
@@ -104,8 +98,27 @@ class User:
         #     raise ValueError("Invalid exercise id")
         self._exercises_solved = value
      
-    def validate_email(self, email):
+    @staticmethod
+    def validate_email(email):
         if type(email) != str:
             return False
         regex = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
         return bool(re.fullmatch(regex, email))
+    
+    @staticmethod
+    def validate_name(name):
+        if type(name) != str:
+            return False
+        return User.NAME_MIN_LENGTH <= len(name) <= User.NAME_MAX_LENGTH
+    
+    @staticmethod
+    def validate_role(role):
+        if type(role) != ROLE:
+            return False
+        return role in ROLE
+    
+    @staticmethod
+    def validate_password(password):
+        if type(password) != str:
+            return False
+        return User.PASSWORD_MIN_LENGTH <= len(password) <= User.PASSWORD_MAX_LENGTH

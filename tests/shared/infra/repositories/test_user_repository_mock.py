@@ -35,3 +35,9 @@ class Test_UserRepositoryMock:
 
         assert user != repo._users[0]
         assert user not in repo._users
+        
+    def test_get_all_users(self):
+        repo = UserRepositoryMock()
+        users = repo.get_all_users()
+
+        assert users == repo._users

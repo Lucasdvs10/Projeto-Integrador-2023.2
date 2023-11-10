@@ -1,13 +1,13 @@
-from src.shared.infra.repositories.answer_repository_mock import AnswerRepositoryMock
-from .get_schedule_usecase import GetScheduleUsecase
-from .get_schedule_controller import GetScheduleController
+from .get_ranking_controller import GetRankingController
+from .get_ranking_usecase import GetRankingUsecase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
+from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
 
 
-def get_shedule_presenter(event, context):
-  repo = AnswerRepositoryMock()
-  usecase = GetScheduleUsecase(repo)
-  controller = GetScheduleController(usecase)
+def get_ranking_presenter(event, context):
+  repo = UserRepositoryMock()
+  usecase = GetRankingUsecase(repo)
+  controller = GetRankingController(usecase)
   
   httpRequest = FastAPIHttpRequest(data=event)
   response = controller(httpRequest)

@@ -1,5 +1,5 @@
-from src.modules.get_schedule.app.get_schedule_usecase import GetScheduleUsecase
-from src.modules.get_schedule.app.get_schedule_viewmodel import GetScheduleViewModel
+from .get_schedule_usecase import GetScheduleUsecase
+from .get_schedule_viewmodel import GetScheduleViewModel
 from src.shared.helpers.external_interfaces.external_interface import IRequest, IResponse
 from src.shared.helpers.external_interfaces.http_codes import OK, InternalServerError
 
