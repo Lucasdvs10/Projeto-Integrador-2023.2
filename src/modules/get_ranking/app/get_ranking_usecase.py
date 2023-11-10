@@ -9,7 +9,7 @@ class GetRankingUsecase:
     def __call__(self) -> list:
         users = self.repo.get_all_users()
         users.sort(key=lambda x: x.exercises_solved, reverse=True)
-        
+        users = users[:20]
         ranking = []
         rank = 1
         for i in range(len(users)):
