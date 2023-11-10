@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi import HTTPException, status
 from fastapi.responses import JSONResponse
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
+from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
 from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
 
 from src.modules.get_schedule.app.get_schedule_presenter import get_shedule_presenter
@@ -103,5 +104,20 @@ def update_user(data: dict = None):
       }
     
   response = update_user_presenter(event, None)
+  
+  return response
+
+@app.delete("/delete_user")
+def delete_user(email: str = None):
+  if email is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"email": email}
+  }
+  
+  response = delete_user_presenter(request, None)
   
   return response
