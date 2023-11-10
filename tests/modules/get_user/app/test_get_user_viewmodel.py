@@ -5,7 +5,7 @@ from src.shared.infra.repositories.user_repository_mock import UserRepositoryMoc
 
 
 class Test_GetUserViewmodel:
-    def test_Get_user_viewmodel(self):
+    def test_get_user_viewmodel(self):
         repo = UserRepositoryMock()
         usecase = GetUserUsecase(repo)
         email = repo.get_all_users()[0].email
