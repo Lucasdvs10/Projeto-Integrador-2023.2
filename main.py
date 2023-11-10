@@ -5,6 +5,7 @@ from src.modules.create_user.app.create_user_presenter import create_user_presen
 from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
 
 from src.modules.get_schedule.app.get_schedule_presenter import get_shedule_presenter
+from src.modules.get_user.app.get_user_presenter import get_user_presenter
 from src.modules.update_schedule.app.update_schedule_presenter import update_schedule_presenter
 
 app = FastAPI()
@@ -68,5 +69,17 @@ def create_user(data: dict = None):
       }
     
   response = create_user_presenter(event, None)
+  
+  return response
+
+@app.get("/get_user")
+def get_user(email: str = None):
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"email": email}
+  }
+  
+  response = get_user_presenter(request, None)
   
   return response
