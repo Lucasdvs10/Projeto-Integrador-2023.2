@@ -25,7 +25,7 @@ class Test_AnswerRepositoryMock:
     
     schedule = repo.get_schedule()
     
-    repo.update_schedule(Schedule("https://www.youtube.com"))
+    repo.update_schedule("https://www.youtube.com")
     
     new_schedule = repo.get_schedule()
     
