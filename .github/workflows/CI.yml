@@ -17,5 +17,12 @@ jobs:
       - name: Install fastapi
         run: |
           python -m pip install --upgrade pip
+          pip install -r requirements.txt
           pip install fastapi
-      - uses: maua-dev/ci_workflows_reusable/.github/workflows/pytest_ci.yml@V1.0
+
+      - name: Run tests
+        run: |
+          pytest
+          
+          
+      
