@@ -22,8 +22,8 @@ class AnswerRepositoryMock(IAnswerRepository):
   def get_schedule(self) -> Schedule:
     return self.schedule
   
-  def update_schedule(self, schedule: Schedule):
-    self.schedule = schedule
+  def update_schedule(self, new_url: str) -> Schedule:
+    self.schedule = Schedule(new_url)
     return self.schedule
     
   
