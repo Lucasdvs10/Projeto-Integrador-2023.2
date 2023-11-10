@@ -1,6 +1,6 @@
 from src.shared.infra.repositories.answer_repository_mock import AnswerRepositoryMock
-from src.modules.get_schedule.app.get_schedule_usecase import GetScheduleUsecase
-from src.modules.get_schedule.app.get_schedule_controller import GetScheduleController
+from .get_schedule_usecase import GetScheduleUsecase
+from .get_schedule_controller import GetScheduleController
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
 
 
