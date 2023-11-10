@@ -41,3 +41,6 @@ class UserRepositoryMock(IUserRepository):
         user = self.get_user_by_email(email)
         self._users.remove(user)
         return user
+    
+    def get_all_users(self):
+        return self._users

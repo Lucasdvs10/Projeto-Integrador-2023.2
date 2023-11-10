@@ -19,3 +19,7 @@ class IUserRepository:
     @abc.abstractmethod
     def delete_user_by_email(self, email: str):
         pass
+    
+    @abc.abstractmethod
+    def get_all_users(self):
+        pass
