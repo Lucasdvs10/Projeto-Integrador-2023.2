@@ -18,6 +18,10 @@ app = FastAPI()
 async def http_exception_handler(request, exc):
   return JSONResponse(status_code=exc.status_code, content=exc.detail)
 
+@app.exception_handler(Exception)
+async def exception_handler(request, exc):
+  return JSONResponse(status_code=500, content=str(exc))
+
 # Schedule
 
 @app.get("/get_schedule")
