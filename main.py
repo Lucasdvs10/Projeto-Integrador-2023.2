@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi import HTTPException, status
 from fastapi.responses import JSONResponse
+from src.modules.create_exercise.app.create_exercise_presenter import create_exercise_presenter
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
 from src.modules.get_all_exercises.app.get_all_exercises_presenter import get_all_exercises_presenter
@@ -134,5 +135,26 @@ def get_all_exercises():
   event = {}
   
   response = get_all_exercises_presenter(event, None)
+  
+  return response
+
+@app.post("/create_exercise", status_code=status.HTTP_201_CREATED)
+def create_exercise(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  event = {
+    "body": {
+        k: str(v) for k, v in data.items()
+    }
+  }
+  
+  for key in data.keys():
+    if type(data[key]) == dict:
+      event["body"][key] = {
+        k: str(v) for k, v in data[key].items()
+      }
+    
+  response = create_exercise_presenter(event, None)
   
   return response
