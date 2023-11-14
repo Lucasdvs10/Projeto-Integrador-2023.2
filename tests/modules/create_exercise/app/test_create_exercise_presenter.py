@@ -7,8 +7,8 @@ class Test_CreateExercisePresenter:
             "exercise_id": "1",
             "title": "Title",
             "enunciado": "Enunciado",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Correct answer"
         }}
         

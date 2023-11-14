@@ -32,18 +32,24 @@ class CreateExerciseController:
         
         if request.data.get('creation_date') is None:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Creation date is required")
-        if type(request.data.get('creation_date')) != int:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Creation date must be a int")
-        if not 1577847600000 <= request.data.get('creation_date') <= 3387133800000:
+        if type(request.data.get('creation_date')) != str:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Creation date must be a decimal string")
+        if request.data.get('creation_date').isdecimal() == False:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Creation date must be a decimal string")
+        creation_date = int(request.data.get('creation_date'))
+        if not 1577847600000 <= creation_date <= 3387133800000:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Creation date must be between 2020-01-01 and 2077-05-01")
         
         if request.data.get('expiration_date') is None:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Expiration date is required")
-        if type(request.data.get('expiration_date')) != int:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Expiration date must be a int")
-        if not 1577847600000 <= request.data.get('expiration_date') <= 3387133800000:
+        if type(request.data.get('expiration_date')) != str:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Expiration date must be a decimal string")
+        if request.data.get('expiration_date').isdecimal() == False:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Expiration date must be a decimal string")
+        expiration_date = int(request.data.get('expiration_date'))
+        if not 1577847600000 <= expiration_date <= 3387133800000:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Expiration date must be between 2020-01-01 and 2077-05-01")
-        if(request.data.get('expiration_date') <= request.data.get('creation_date')):
+        if expiration_date <= creation_date:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Expiration date must be after creation date")
         
         if request.data.get('correct_answer') is None:
@@ -55,8 +61,8 @@ class CreateExerciseController:
             exercise_id=request.data.get('exercise_id'),
             title=request.data.get('title'),
             enunciado=request.data.get('enunciado'),
-            creation_date=request.data.get('creation_date'),
-            expiration_date=request.data.get('expiration_date'),
+            creation_date=creation_date,
+            expiration_date=expiration_date,
             correct_answer=request.data.get('correct_answer')
         )
         

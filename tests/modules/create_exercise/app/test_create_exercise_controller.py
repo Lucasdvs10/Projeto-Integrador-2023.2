@@ -17,8 +17,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -44,8 +44,8 @@ class Test_CreateExerciseController:
         request = HttpRequest(body={
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -63,8 +63,8 @@ class Test_CreateExerciseController:
             "exercise_id": 1,
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -81,8 +81,8 @@ class Test_CreateExerciseController:
         request = HttpRequest(body={
             "exercise_id": "1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -100,8 +100,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": 1,
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -119,8 +119,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "a",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -137,8 +137,8 @@ class Test_CreateExerciseController:
         request = HttpRequest(body={
             "exercise_id": "1",
             "title": "Exercise 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -156,8 +156,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": 1,
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -175,8 +175,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "a",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -194,7 +194,7 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "expiration_date": 3387133800000,
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -213,14 +213,14 @@ class Test_CreateExerciseController:
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
             "creation_date": "invalid_date",
-            "expiration_date": 3387133800000,
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
         with pytest.raises(HTTPException) as exc:
             controller(request)
         assert exc.value.status_code == 400
-        assert exc.value.detail == "Creation date must be a int"
+        assert exc.value.detail == "Creation date must be a decimal string"
         
     def test_create_exercise_controller_invalid_creation_date_range(self):
         repo = ExerciseRepositoryMock()
@@ -231,8 +231,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847599999,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847599999",
+            "expiration_date": "3387133800000",
             "correct_answer": "Answer 1"
         })
         
@@ -250,7 +250,7 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
+            "creation_date": "1577847600000",
             "correct_answer": "Answer 1"
         })
         
@@ -268,7 +268,7 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
+            "creation_date": "1577847600000",
             "expiration_date": "invalid_date",
             "correct_answer": "Answer 1"
         })
@@ -276,7 +276,7 @@ class Test_CreateExerciseController:
         with pytest.raises(HTTPException) as exc:
             controller(request)
         assert exc.value.status_code == 400
-        assert exc.value.detail == "Expiration date must be a int"
+        assert exc.value.detail == "Expiration date must be a decimal string"
         
     def test_create_exercise_controller_invalid_expiration_date_range(self):
         repo = ExerciseRepositoryMock()
@@ -287,8 +287,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800001,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800001",
             "correct_answer": "Answer 1"
         })
         
@@ -306,8 +306,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 3387133800000,
-            "expiration_date": 1577847600000,
+            "creation_date": "3387133800000",
+            "expiration_date": "1577847600000",
             "correct_answer": "Answer 1"
         })
         
@@ -325,8 +325,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
         })
         
         with pytest.raises(HTTPException) as exc:
@@ -343,8 +343,8 @@ class Test_CreateExerciseController:
             "exercise_id": "1",
             "title": "Exercise 1",
             "enunciado": "Enunciado 1",
-            "creation_date": 1577847600000,
-            "expiration_date": 3387133800000,
+            "creation_date": "1577847600000",
+            "expiration_date": "3387133800000",
             "correct_answer": 1
         })
         
