@@ -31,3 +31,8 @@ class Test_ExerciseRepositoryMock:
 
         assert exercise not in repo._exercises
         assert len(repo._exercises) == len_before - 1
+        
+    def test_get_all_exercises(self):
+        repo = ExerciseRepositoryMock()
+        exercises = repo.get_all_exercises()
+        assert exercises == repo._exercises

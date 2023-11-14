@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 from src.shared.domain.entities.exercise import Exercise
 from src.shared.domain.repositories.exercise_repository_interface import IExerciseRepository
 
@@ -60,3 +60,6 @@ class ExerciseRepositoryMock(IExerciseRepository):
 
         self._exercises.remove(exercise_to_delete)
         return exercise_to_delete
+
+    def get_all_exercises(self) -> List[Exercise]:
+        return self._exercises
