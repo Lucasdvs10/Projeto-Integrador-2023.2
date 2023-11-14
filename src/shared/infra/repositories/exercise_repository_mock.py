@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import List, Optional
 from src.shared.domain.entities.exercise import Exercise
 from src.shared.domain.repositories.exercise_repository_interface import IExerciseRepository
@@ -10,15 +9,15 @@ class ExerciseRepositoryMock(IExerciseRepository):
                 Exercise(exercise_id="111-111-111",
                          title="Primeiro Presidente do Brasil",
                          enunciado="Quem foi o primeiro presidente do Brasil?",
-                         creation_date=int(datetime(2023, 1,10).timestamp() * 1000),
-                         expiration_date=int(datetime(2023, 2, 11).timestamp() * 1000),
+                         creation_date=1673319600000,
+                         expiration_date=1676084400000,
                          correct_answer="Marechal Deodoro"
                          ),
                 Exercise(exercise_id="111-222-111",
                          title="Qual lingua é mais antiga",
                          enunciado="Qual lingua é mais antiga: Python ou java",
-                         creation_date=int(datetime(2023, 1,10).timestamp() * 1000),
-                         expiration_date=int(datetime(2023, 2, 11).timestamp() * 1000),
+                         creation_date=1673319600000,
+                         expiration_date=1676084400000,
                          correct_answer="Python"
                          )
         ]
