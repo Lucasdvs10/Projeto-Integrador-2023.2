@@ -1,5 +1,6 @@
-from fastapi import FastAPI
-from fastapi import HTTPException, status
+from fastapi import FastAPI, HTTPException, status, File, UploadFile
+import csv
+import codecs
 from fastapi.responses import JSONResponse
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
@@ -121,3 +122,9 @@ def delete_user(email: str = None):
   response = delete_user_presenter(request, None)
   
   return response
+
+
+@app.post("/batch_create_users", status_code=status.HTTP_201_CREATED)
+def batch_create_users(file: UploadFile = File(...)):
+  csvReader = csv.DictReader(codecs.iterdecode(file.file, 'utf-8'))
+  return list(csvReader)
