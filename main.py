@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, status, File, UploadFile
 import csv
 import codecs
 from fastapi.responses import JSONResponse
+from src.modules.batch_create_users.app.batch_create_users_presenter import batch_create_users_presenter
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
 from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
@@ -139,7 +140,6 @@ def batch_create_users(file: UploadFile = File(...)):
   for row in csvReader:
     event["body"]["users"].append(row)
     
-  # response = batch_create_users_presenter(event, None)
-  response = csvReader
+  response = batch_create_users_presenter(event, None)
 
   return response
