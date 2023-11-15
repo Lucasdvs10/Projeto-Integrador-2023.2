@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
-from src.modules.batch_create_users.app.batch_create_users_usecase import BatchCreateUsersUsecase
-from src.modules.batch_create_users.app.batch_create_users_viewmodel import BatchCreateUsersViewmodel
+from .batch_create_users_usecase import BatchCreateUsersUsecase
+from .batch_create_users_viewmodel import BatchCreateUsersViewmodel
 from src.shared.domain.entities.user import User
 from src.shared.domain.enums.role_enum import ROLE
 from src.shared.helpers.external_interfaces.external_interface import IRequest, IResponse
