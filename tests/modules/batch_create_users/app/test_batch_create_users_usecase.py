@@ -22,3 +22,13 @@ class Test_BatchCreateUsersUsecase:
             new_users = usecase(UserGenerator.generate_users(5) + [repo.get_all_users()[0]])
         assert exc.value.status_code == 400
         assert exc.value.detail == f"User with e-mail {repo.get_all_users()[0].email} already exists"
+        
+    def test_batch_create_users_with_duplicate_user(self):
+        repo = UserRepositoryMock()
+        usecase = BatchCreateUsersUsecase(repo)
+        user = UserGenerator.generate_users(1)[0]
+        
+        with pytest.raises(HTTPException) as exc:
+            new_users = usecase([user, user])
+        assert exc.value.status_code == 400
+        assert exc.value.detail == f"Duplicate e-mail {user.email}"
