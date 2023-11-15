@@ -24,7 +24,9 @@ class CreateUserController:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid name")
     
         if not request.data.get("role"):
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Field role is missing")        
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Field role is missing")
+        if type(request.data.get("role")) != str:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid role")        
         if request.data.get("role").upper() not in [role.value for role in ROLE]:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid role")
         role = ROLE(request.data.get("role").upper())
