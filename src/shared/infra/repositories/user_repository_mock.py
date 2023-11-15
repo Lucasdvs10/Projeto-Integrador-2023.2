@@ -421,3 +421,8 @@ class UserRepositoryMock(IUserRepository):
 
     def get_all_users(self):
         return self._users
+
+    def batch_create_users(self, users: list):
+        for user in users:
+            self._users.append(user)
+        return users
