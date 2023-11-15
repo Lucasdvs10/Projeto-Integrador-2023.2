@@ -126,5 +126,20 @@ def delete_user(email: str = None):
 
 @app.post("/batch_create_users", status_code=status.HTTP_201_CREATED)
 def batch_create_users(file: UploadFile = File(...)):
+  if file is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  elif file.filename.split(".")[-1] != "csv":
+    raise HTTPException(status_code=400, detail="File should be csv format")
   csvReader = csv.DictReader(codecs.iterdecode(file.file, 'utf-8'))
-  return list(csvReader)
+  event = {
+    "body": {
+      "users": []
+    }
+  }
+  for row in csvReader:
+    event["body"]["users"].append(row)
+    
+  # response = batch_create_users_presenter(event, None)
+  response = csvReader
+
+  return response
