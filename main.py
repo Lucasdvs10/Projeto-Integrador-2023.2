@@ -2,13 +2,18 @@ from fastapi import FastAPI, HTTPException, status, File, UploadFile
 import csv
 import codecs
 from fastapi.responses import JSONResponse
+from src.modules.create_exercise.app.create_exercise_presenter import create_exercise_presenter
 from src.modules.batch_create_users.app.batch_create_users_presenter import batch_create_users_presenter
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
+from src.modules.delete_exercise.app.delete_exercise_presenter import delete_exercise_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
+from src.modules.get_all_exercises.app.get_all_exercises_presenter import get_all_exercises_presenter
+from src.modules.get_exercise.app.get_exercise_presenter import get_exercise_presenter
 from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
 
 from src.modules.get_schedule.app.get_schedule_presenter import get_shedule_presenter
 from src.modules.get_user.app.get_user_presenter import get_user_presenter
+from src.modules.update_exercise.app.update_exercise_presenter import update_exercise_presenter
 from src.modules.update_schedule.app.update_schedule_presenter import update_schedule_presenter
 from src.modules.update_user.app.update_user_presenter import update_user_presenter
 
@@ -17,6 +22,12 @@ app = FastAPI()
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
   return JSONResponse(status_code=exc.status_code, content=exc.detail)
+
+@app.exception_handler(Exception)
+async def exception_handler(request, exc):
+  return JSONResponse(status_code=500, content=str(exc))
+
+# Schedule
 
 @app.get("/get_schedule")
 def get_schedule():
@@ -46,6 +57,8 @@ def update_schedule(data: dict = None):
   response = update_schedule_presenter(event, None)
   
   return response
+
+# User
 
 @app.get("/get_ranking")
 def get_ranking():
@@ -124,6 +137,78 @@ def delete_user(email: str = None):
   
   return response
 
+# Exercise
+
+@app.get("/get_all_exercises")
+def get_all_exercises():
+  event = {}
+  
+  response = get_all_exercises_presenter(event, None)
+  
+  return response
+
+@app.post("/create_exercise", status_code=status.HTTP_201_CREATED)
+def create_exercise(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  event = {
+    "body": {
+        k: str(v) for k, v in data.items()
+    }
+  }
+  
+  for key in data.keys():
+    if type(data[key]) == dict:
+      event["body"][key] = {
+        k: str(v) for k, v in data[key].items()
+      }
+    
+  response = create_exercise_presenter(event, None)
+  
+  return response
+
+@app.get("/get_exercise")
+def get_exercise(exercise_id: str = None):
+  if exercise_id is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"exercise_id": exercise_id}
+  }
+  
+  response = get_exercise_presenter(request, None)
+  
+  return response
+
+@app.delete("/delete_exercise")
+def delete_exercise(exercise_id: str = None):
+  if exercise_id is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"exercise_id": exercise_id}
+  }
+  
+  response = delete_exercise_presenter(request, None)
+  
+  return response
+
+@app.patch("/update_exercise")
+def update_exercise(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+
+  event = {
+    "body": {
+        k: v for k, v in data.items()
+    }
+  }
+  response = update_exercise_presenter(event, None)
 
 @app.post("/batch_create_users", status_code=status.HTTP_201_CREATED)
 def batch_create_users(file: UploadFile = File(...)):

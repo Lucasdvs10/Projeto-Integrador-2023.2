@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Optional
+from typing import List, Optional
 
 from src.shared.domain.entities.exercise import Exercise
 
@@ -19,4 +19,8 @@ class IExerciseRepository:
 
     @abstractmethod
     def delete_exercise_by_id(self, id: str) -> Optional[Exercise]:
+        pass
+    
+    @abstractmethod
+    def get_all_exercises(self) -> List[Exercise]:
         pass
