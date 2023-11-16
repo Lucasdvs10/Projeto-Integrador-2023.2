@@ -1,7 +1,9 @@
-from fastapi import FastAPI
-from fastapi import HTTPException, status
+from fastapi import FastAPI, HTTPException, status, File, UploadFile
+import csv
+import codecs
 from fastapi.responses import JSONResponse
 from src.modules.create_exercise.app.create_exercise_presenter import create_exercise_presenter
+from src.modules.batch_create_users.app.batch_create_users_presenter import batch_create_users_presenter
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
 from src.modules.delete_exercise.app.delete_exercise_presenter import delete_exercise_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
@@ -207,5 +209,22 @@ def update_exercise(data: dict = None):
     }
   }
   response = update_exercise_presenter(event, None)
-  
+
+@app.post("/batch_create_users", status_code=status.HTTP_201_CREATED)
+def batch_create_users(file: UploadFile = File(...)):
+  if file is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  elif file.filename.split(".")[-1] != "csv":
+    raise HTTPException(status_code=400, detail="File should be csv format")
+  csvReader = csv.DictReader(codecs.iterdecode(file.file, 'utf-8'))
+  event = {
+    "body": {
+      "users": []
+    }
+  }
+  for row in csvReader:
+    event["body"]["users"].append(row)
+    
+  response = batch_create_users_presenter(event, None)
+
   return response

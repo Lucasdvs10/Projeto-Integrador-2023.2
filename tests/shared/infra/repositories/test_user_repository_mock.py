@@ -1,5 +1,6 @@
 from src.shared.domain.entities.user import User
 from src.shared.domain.enums.role_enum import ROLE
+from src.shared.helpers.functions.user_generator import UserGenerator
 from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
 
 
@@ -41,3 +42,12 @@ class Test_UserRepositoryMock:
         users = repo.get_all_users()
 
         assert users == repo._users
+        
+    def test_batch_create_users(self):
+        repo = UserRepositoryMock()
+        users = UserGenerator.generate_users(20)
+        len_before = len(repo._users)
+        created_users = repo.batch_create_users(users)
+
+        assert created_users == users
+        assert len(repo._users) == len_before + len(users)

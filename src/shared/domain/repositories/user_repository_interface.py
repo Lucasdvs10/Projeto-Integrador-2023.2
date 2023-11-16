@@ -23,3 +23,7 @@ class IUserRepository:
     @abc.abstractmethod
     def get_all_users(self):
         pass
+    
+    @abc.abstractmethod
+    def batch_create_users(self, users: list):
+        pass

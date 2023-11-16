@@ -8,7 +8,7 @@ class Test_UpdateUserViewmodel:
     def test_update_user_viewmodel(self):
         repo = UserRepositoryMock()
         usecase = UpdateUserUsecase(repo)
-        email = repo.get_all_users()[0].email
+        email = "22.01102-0@maua.br"
         updated_user = usecase(email=email, new_name="Luizinho")
         viewmodel = UpdateUserViewmodel(updated_user).to_dict()
         expected = {'user': {'email': '22.01102-0@maua.br', 'name': 'Luizinho', 'role': 'MONITOR', 'exercises_solved': []}, 'message': 'User updated successfully'}

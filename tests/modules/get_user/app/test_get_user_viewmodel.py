@@ -8,7 +8,7 @@ class Test_GetUserViewmodel:
     def test_get_user_viewmodel(self):
         repo = UserRepositoryMock()
         usecase = GetUserUsecase(repo)
-        email = repo.get_all_users()[0].email
+        email = "22.01102-0@maua.br"
         new_user = usecase(email=email)
         viewmodel = GetUserViewmodel(new_user).to_dict()
         expected = {'user': {'email': '22.01102-0@maua.br', 'name': 'Luigi Trevisan', 'role': 'MONITOR', 'exercises_solved': []}, 'message': 'User retrieved successfully'}

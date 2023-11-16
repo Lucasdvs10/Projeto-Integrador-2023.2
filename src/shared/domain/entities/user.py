@@ -122,3 +122,6 @@ class User:
         if type(password) != str:
             return False
         return User.PASSWORD_MIN_LENGTH <= len(password) <= User.PASSWORD_MAX_LENGTH
+    
+    def __str__(self):
+        return f"User(email={self._email}, name={self._name}, role={self._role}, password={self._password}, exercises_solved={self._exercises_solved})"
