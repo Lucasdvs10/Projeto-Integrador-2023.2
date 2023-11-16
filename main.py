@@ -5,6 +5,7 @@ from src.modules.create_exercise.app.create_exercise_presenter import create_exe
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
 from src.modules.get_all_exercises.app.get_all_exercises_presenter import get_all_exercises_presenter
+from src.modules.get_exercise.app.get_exercise_presenter import get_exercise_presenter
 from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
 
 from src.modules.get_schedule.app.get_schedule_presenter import get_shedule_presenter
@@ -160,5 +161,20 @@ def create_exercise(data: dict = None):
       }
     
   response = create_exercise_presenter(event, None)
+  
+  return response
+
+@app.get("/get_exercise")
+def get_exercise(exercise_id: str = None):
+  if exercise_id is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"exercise_id": exercise_id}
+  }
+  
+  response = get_exercise_presenter(request, None)
   
   return response
