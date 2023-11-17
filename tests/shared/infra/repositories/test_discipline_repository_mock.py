@@ -7,7 +7,7 @@ class Test_DisciplineRepositoryMock:
     def test_create_discipline(self):
         repo = DisciplineRepositoryMock()
         len_before = len(repo.all_disciplines)
-        discipline = Discipline(dicipline_id="aaa-aaa-aaa-aaa", name="Calculo 1", year=2, students_emails_list=[])
+        discipline = Discipline(discipline_id="aaa-aaa-aaa-aaa", name="Calculo 1", year=2, students_emails_list=[])
         
         new_discipline = repo.create_discipline(discipline)
         

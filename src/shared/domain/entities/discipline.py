@@ -11,14 +11,14 @@ class Discipline:
     _year: int
     _students_emails_list: List[str]
 
-    def __init__(self, name, dicipline_id, year, students_emails_list):
+    def __init__(self, name, discipline_id, year, students_emails_list):
         if type(name) != str:
             raise EntityParameterTypeError("Name")
         self._name = name
 
-        if type(dicipline_id) != str:
+        if type(discipline_id) != str:
             raise EntityParameterTypeError("Discipline ID")
-        self._discipline_id = dicipline_id
+        self._discipline_id = discipline_id
 
         if type(year) != int:
             raise EntityParameterTypeError("year")
