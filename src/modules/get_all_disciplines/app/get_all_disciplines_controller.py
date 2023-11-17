@@ -9,11 +9,7 @@ class GetAllDisciplinesController:
         self.usecase = usecase
         
     def __call__(self, request: IRequest = {}) -> IResponse:
-        try:
-            disciplines = self.usecase()
-            viewmodel = GetAllDisciplinesViewmodel(disciplines)
-        
-            return OK(viewmodel.to_dict())
+        disciplines = self.usecase()
+        viewmodel = GetAllDisciplinesViewmodel(disciplines)
     
-        except Exception as exc:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+        return OK(viewmodel.to_dict())
