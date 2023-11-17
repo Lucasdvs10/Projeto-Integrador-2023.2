@@ -32,5 +32,5 @@ class GetAllDisciplinesViewmodel:
     def to_dict(self):
         return {
             "disciplines": [discipline.to_dict() for discipline in self.disciplines],
-            "message": "Disciplines found successfully"
+            "message": "Disciplines retrieved successfully"
         }

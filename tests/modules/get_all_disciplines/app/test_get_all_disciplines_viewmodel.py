@@ -8,4 +8,4 @@ class Test_GetAllDisciplinesViewmodel:
         disciplines = repo.get_all_disciplines()
         viewmodel = GetAllDisciplinesViewmodel(disciplines).to_dict()
         assert len(viewmodel["disciplines"]) == len(disciplines)
-        assert viewmodel["message"] == "Disciplines found successfully"
+        assert viewmodel["message"] == "Disciplines retrieved successfully"
