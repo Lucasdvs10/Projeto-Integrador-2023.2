@@ -209,6 +209,8 @@ def update_exercise(data: dict = None):
     }
   }
   response = update_exercise_presenter(event, None)
+  
+  return response
 
 @app.post("/batch_create_users", status_code=status.HTTP_201_CREATED)
 def batch_create_users(file: UploadFile = File(...)):
