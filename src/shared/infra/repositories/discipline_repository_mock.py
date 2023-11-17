@@ -52,3 +52,6 @@ class DisciplineRepositoryMock(IDisciplineRespository):
         for discipline in disciplines:
             self.all_disciplines.append(discipline)
         return disciplines
+    
+    def get_all_disciplines(self) -> List[Discipline]:
+        return self.all_disciplines

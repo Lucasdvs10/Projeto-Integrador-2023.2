@@ -53,3 +53,10 @@ class Test_DisciplineRepositoryMock:
         ]
         
         new_disciplines = repo.batch_create_disciplines(disciplines)
+        
+    def test_get_all_disciplines(self):
+        repo = DisciplineRepositoryMock()
+        
+        all_disciplines = repo.get_all_disciplines()
+        
+        assert all_disciplines == repo.all_disciplines

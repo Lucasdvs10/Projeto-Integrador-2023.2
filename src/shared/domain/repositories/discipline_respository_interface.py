@@ -25,3 +25,7 @@ class IDisciplineRespository:
     @abc.abstractmethod
     def batch_create_disciplines(self, disciplines: List[Discipline]) -> List[Discipline]:
         pass
+    
+    @abc.abstractmethod
+    def get_all_disciplines(self) -> List[Discipline]:
+        pass
