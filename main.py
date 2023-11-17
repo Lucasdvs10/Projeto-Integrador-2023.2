@@ -8,6 +8,7 @@ from src.modules.batch_create_users.app.batch_create_users_presenter import batc
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
 from src.modules.delete_exercise.app.delete_exercise_presenter import delete_exercise_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
+from src.modules.get_all_disciplines.app.get_all_disciplines_presenter import get_all_disciplines_presenter
 from src.modules.get_all_exercises.app.get_all_exercises_presenter import get_all_exercises_presenter
 from src.modules.get_exercise.app.get_exercise_presenter import get_exercise_presenter
 from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
@@ -251,4 +252,12 @@ def batch_create_disciplines(file: UploadFile = File(...)):
     
   response = batch_create_disciplines_presenter(event, None)
 
+  return response
+
+@app.get("/get_all_disciplines")
+def get_all_disciplines():
+  event = {}
+  
+  response = get_all_disciplines_presenter(event, None)
+  
   return response
