@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from src.shared.domain.entities.discipline import Discipline
 from src.shared.domain.repositories.discipline_respository_interface import IDisciplineRespository
@@ -26,16 +26,19 @@ class DisciplineRepositoryMock(IDisciplineRespository):
                 return discipline
         return None
 
-    def update_discipline_by_id(self, discipline_id: str, new_name: Optional[str], new_year: Optional[int],
-                                new_students_list: Optional[str]) -> Optional[Discipline]:
+    def update_discipline_by_id(self, discipline_id: str, new_name: Optional[str] = None, new_year: Optional[int] = None,
+                                new_students_list: Optional[str] = None) -> Optional[Discipline]:
 
         discipline_to_update = self.get_discipline_by_id(discipline_id)
         if discipline_to_update is None:
             return None
-        discipline_to_update.name = new_name
-        discipline_to_update.year = new_year
-        discipline_to_update.students_emails_list = new_students_list
-
+        if new_name:
+            discipline_to_update.name = new_name
+        if new_year:
+            discipline_to_update.year = new_year
+        if new_students_list:
+            discipline_to_update.students_emails_list = new_students_list
+            
         return discipline_to_update
 
     def delete_discipline(self, discipline_id) -> Optional[Discipline]:
@@ -44,3 +47,8 @@ class DisciplineRepositoryMock(IDisciplineRespository):
                 self.all_disciplines.remove(discipline)
                 return discipline
         return None
+
+    def batch_create_disciplines(self, disciplines: List[Discipline]) -> List[Discipline]:
+        for discipline in disciplines:
+            self.all_disciplines.append(discipline)
+        return disciplines
