@@ -6,6 +6,7 @@ from src.modules.batch_create_disciplines.app.batch_create_disciplines_presenter
 from src.modules.create_exercise.app.create_exercise_presenter import create_exercise_presenter
 from src.modules.batch_create_users.app.batch_create_users_presenter import batch_create_users_presenter
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
+from src.modules.delete_discipline.app.delete_discipline_presenter import delete_discipline_presenter
 from src.modules.delete_exercise.app.delete_exercise_presenter import delete_exercise_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
 from src.modules.get_all_disciplines.app.get_all_disciplines_presenter import get_all_disciplines_presenter
@@ -275,5 +276,20 @@ def get_discipline(discipline_id: str = None):
   }
   
   response = get_discipline_presenter(request, None)
+  
+  return response
+
+@app.delete("/delete_discipline")
+def delete_discipline(discipline_id: str = None):
+  if discipline_id is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"discipline_id": discipline_id}
+  }
+  
+  response = delete_discipline_presenter(request, None)
   
   return response
