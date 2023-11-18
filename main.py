@@ -10,6 +10,7 @@ from src.modules.delete_exercise.app.delete_exercise_presenter import delete_exe
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
 from src.modules.get_all_disciplines.app.get_all_disciplines_presenter import get_all_disciplines_presenter
 from src.modules.get_all_exercises.app.get_all_exercises_presenter import get_all_exercises_presenter
+from src.modules.get_discipline.app.get_discipline_presenter import get_discipline_presenter
 from src.modules.get_exercise.app.get_exercise_presenter import get_exercise_presenter
 from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
 
@@ -259,5 +260,20 @@ def get_all_disciplines():
   event = {}
   
   response = get_all_disciplines_presenter(event, None)
+  
+  return response
+
+@app.get("/get_discipline")
+def get_discipline(discipline_id: str = None):
+  if discipline_id is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"discipline_id": discipline_id}
+  }
+  
+  response = get_discipline_presenter(request, None)
   
   return response
