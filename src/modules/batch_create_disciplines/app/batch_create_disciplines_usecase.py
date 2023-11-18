@@ -1,10 +1,10 @@
 from typing import List
 from src.shared.domain.entities.discipline import Discipline
-from src.shared.domain.repositories.discipline_respository_interface import IDisciplineRespository
+from src.shared.domain.repositories.discipline_respository_interface import IDisciplineRepository
 from fastapi import HTTPException, status
 
 class BatchCreateDisciplinesUseCase:
-    def __init__(self, repo: IDisciplineRespository):
+    def __init__(self, repo: IDisciplineRepository):
         self.repo = repo
 
     def __call__(self, disciplines: List[Discipline]):

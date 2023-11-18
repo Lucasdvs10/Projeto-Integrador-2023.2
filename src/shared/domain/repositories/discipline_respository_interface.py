@@ -4,7 +4,7 @@ from typing import List, Optional
 from src.shared.domain.entities.discipline import Discipline
 
 
-class IDisciplineRespository:
+class IDisciplineRepository:
 
     @abc.abstractmethod
     def create_discipline(self, new_discipline: Discipline) -> Discipline:

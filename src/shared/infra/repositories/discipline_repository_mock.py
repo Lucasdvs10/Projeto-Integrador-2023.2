@@ -1,10 +1,10 @@
 from typing import List, Optional
 
 from src.shared.domain.entities.discipline import Discipline
-from src.shared.domain.repositories.discipline_respository_interface import IDisciplineRespository
+from src.shared.domain.repositories.discipline_respository_interface import IDisciplineRepository
 
 
-class DisciplineRepositoryMock(IDisciplineRespository):
+class DisciplineRepositoryMock(IDisciplineRepository):
 
     def __init__(self):
         self.all_disciplines = [
