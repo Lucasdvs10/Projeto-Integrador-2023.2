@@ -1,4 +1,4 @@
-from src.shared.domain.repositories.discipline_respository_interface import IDisciplineRepository
+from src.shared.domain.repositories.discipline_repository_interface import IDisciplineRepository
 from fastapi import HTTPException, status
 
 class GetDisciplineUsecase:

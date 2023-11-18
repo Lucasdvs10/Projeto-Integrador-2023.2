@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from src.shared.domain.entities.discipline import Discipline
-from src.shared.domain.repositories.discipline_respository_interface import IDisciplineRepository
+from src.shared.domain.repositories.discipline_repository_interface import IDisciplineRepository
 
 
 class DisciplineRepositoryMock(IDisciplineRepository):
