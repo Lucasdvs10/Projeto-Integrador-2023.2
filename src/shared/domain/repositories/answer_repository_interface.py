@@ -7,7 +7,23 @@ from src.shared.domain.entities.schedule import Schedule
 class IAnswerRepository:
   
   @abc.abstractmethod
-  def get_answers(self) -> List[Answer]:
+  def get_answers(self, exercise_id) -> List[Answer]:
+    pass
+  
+  @abc.abstractmethod
+  def create_answer(self, answer: Answer) -> Answer:
+    pass
+  
+  @abc.abstractmethod
+  def get_answer(self, answer_id: str) -> Answer:
+    pass
+  
+  @abc.abstractmethod
+  def update_answer(self, answer_id: str, new_content: str, new_email: str, new_is_right: int) -> Answer:
+    pass
+  
+  @abc.abstractmethod
+  def delete_answer_by_id(self, answer_id: str) -> Answer:
     pass
 
   @abc.abstractmethod
