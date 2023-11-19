@@ -2,17 +2,22 @@ from fastapi import FastAPI, HTTPException, status, File, UploadFile
 import csv
 import codecs
 from fastapi.responses import JSONResponse
+from src.modules.create_answer.app.create_answer_presenter import create_answer_presenter
 from src.modules.create_exercise.app.create_exercise_presenter import create_exercise_presenter
 from src.modules.batch_create_users.app.batch_create_users_presenter import batch_create_users_presenter
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
+from src.modules.delete_answer.app.delete_answer_presenter import delete_answer_presenter
 from src.modules.delete_exercise.app.delete_exercise_presenter import delete_exercise_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
 from src.modules.get_all_exercises.app.get_all_exercises_presenter import get_all_exercises_presenter
+from src.modules.get_answer.app.get_answer_presenter import get_answer_presenter
+from src.modules.get_answers.app.get_answers_presenter import get_answers_presenter
 from src.modules.get_exercise.app.get_exercise_presenter import get_exercise_presenter
 from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
 
 from src.modules.get_schedule.app.get_schedule_presenter import get_shedule_presenter
 from src.modules.get_user.app.get_user_presenter import get_user_presenter
+from src.modules.update_answer.app.update_answer_presenter import update_answer_presenter
 from src.modules.update_exercise.app.update_exercise_presenter import update_exercise_presenter
 from src.modules.update_schedule.app.update_schedule_presenter import update_schedule_presenter
 from src.modules.update_user.app.update_user_presenter import update_user_presenter
@@ -228,3 +233,89 @@ def batch_create_users(file: UploadFile = File(...)):
   response = batch_create_users_presenter(event, None)
 
   return response
+
+@app.get("/get_answers", status_code=status.HTTP_200_OK)
+def get_answers(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  event = {
+    "body": {
+        k: v for k, v in data.items()
+    }
+  }
+  
+  response = get_answers_presenter(event, None)
+  
+  return response
+
+@app.post("/create_answer", status_code=status.HTTP_201_CREATED)
+def create_answer(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  event = {
+    "body": {
+        k: v for k, v in data.items()
+    }
+  }
+  
+  for key in data.keys():
+    if type(data[key]) == dict:
+      event["body"][key] = {
+        k: str(v) for k, v in data[key].items()
+      }
+  
+  response = create_answer_presenter(event, None)
+  
+  return response
+
+@app.delete("/delete_answer", status_code=status.HTTP_200_OK)
+def delete_answer(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  event = {
+    "body": {
+        k: v for k, v in data.items()
+    }
+  }
+  
+  response = delete_answer_presenter(event, None)
+  
+  return response
+
+@app.patch("/update_answer", status_code=status.HTTP_200_OK)
+def update_answer(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  event = {
+    "body": {
+        k: v for k, v in data.items()
+    }
+  }  
+  for key in data.keys():
+    if type(data[key]) == dict:
+      event["body"][key] = {
+        k: str(v) for k, v in data[key].items()
+      }
+  
+  response = update_answer_presenter(event, None)
+  
+  return response
+
+@app.get("/get_answer", status_code=status.HTTP_200_OK)
+def get_answer(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  event = {
+    "body": {
+        k: v for k, v in data.items()
+    }
+  }  
+  response = get_answer_presenter(event, None)
+  
+  return response
+
