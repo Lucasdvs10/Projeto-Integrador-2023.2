@@ -27,7 +27,7 @@ class DisciplineRepositoryMock(IDisciplineRepository):
         return None
 
     def update_discipline_by_id(self, discipline_id: str, new_name: Optional[str] = None, new_year: Optional[int] = None,
-                                new_students_list: Optional[str] = None) -> Optional[Discipline]:
+                                new_students_list: Optional[List[str]] = None) -> Optional[Discipline]:
 
         discipline_to_update = self.get_discipline_by_id(discipline_id)
         if discipline_to_update is None:
@@ -36,7 +36,7 @@ class DisciplineRepositoryMock(IDisciplineRepository):
             discipline_to_update.name = new_name
         if new_year:
             discipline_to_update.year = new_year
-        if new_students_list:
+        if new_students_list is not None:
             discipline_to_update.students_emails_list = new_students_list
             
         return discipline_to_update
