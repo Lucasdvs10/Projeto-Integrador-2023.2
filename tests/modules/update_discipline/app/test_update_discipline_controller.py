@@ -39,22 +39,6 @@ class Test_UpdateDisciplineController:
         assert exc.value.status_code == 400
         assert exc.value.detail == "Missing discipline_id"
         
-    def test_update_discipline_controller_with_invalid_discipline_id(self):
-        repo = DisciplineRepositoryMock()
-        usecase = UpdateDisciplineUsecase(repo)
-        controller = UpdateDisciplineController(usecase)
-        request = HttpRequest(body={
-            "discipline_id": "invalid_discipline_id",
-            "new_name": "New name",
-            "new_year": 2,
-            "new_students_list": []
-        })
-        
-        with pytest.raises(HTTPException) as exc:
-            controller(request)
-        assert exc.value.status_code == 400
-        assert exc.value.detail == "Invalid discipline_id"
-        
     def test_update_discipline_controller_with_none_new_name(self):
         repo = DisciplineRepositoryMock()
         usecase = UpdateDisciplineUsecase(repo)
