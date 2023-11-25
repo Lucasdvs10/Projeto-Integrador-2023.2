@@ -44,7 +44,15 @@ class BatchCreateDisciplinesController:
                 discipline["year"] = int(discipline["year"])
             
             if type(discipline.get("students_emails_list")) is not list:
-                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid students_emails_list in discipline " + str(count))
+                if type(discipline.get("students_emails_list")) is not str:
+                    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid students_emails_list in discipline " + str(count))
+                if User.validate_email(discipline.get("students_emails_list")):
+                    discipline["students_emails_list"] = [discipline.get("students_emails_list")]
+                if discipline.get("students_emails_list")[0] == "[" and discipline.get("students_emails_list")[-1] == "]":
+                    discipline["students_emails_list"] = discipline.get("students_emails_list")[1:-1].split(",")
+                else:
+                    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid students_emails_list in discipline " + str(count))
+                
             
             for email in discipline.get("students_emails_list"):
                 if email is None:
