@@ -3,6 +3,7 @@ import csv
 import codecs
 from fastapi.responses import JSONResponse
 from src.modules.batch_create_disciplines.app.batch_create_disciplines_presenter import batch_create_disciplines_presenter
+from src.modules.create_discipline.app.create_discipline_presenter import create_discipline_presenter
 from src.modules.create_exercise.app.create_exercise_presenter import create_exercise_presenter
 from src.modules.batch_create_users.app.batch_create_users_presenter import batch_create_users_presenter
 from src.modules.create_user.app.create_user_presenter import create_user_presenter
@@ -291,5 +292,20 @@ def delete_discipline(discipline_id: str = None):
   }
   
   response = delete_discipline_presenter(request, None)
+  
+  return response
+
+@app.post("/create_discipline", status_code=status.HTTP_201_CREATED)
+def create_discipline(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+    
+  event = {
+    "body": {
+        k: v for k, v in data.items()
+    }
+  }
+  
+  response = create_discipline_presenter(event, None)
   
   return response
