@@ -2,6 +2,12 @@ from fastapi import FastAPI, HTTPException, status, File, UploadFile
 import csv
 import codecs
 from fastapi.responses import JSONResponse
+from src.modules.batch_create_disciplines.app.batch_create_disciplines_presenter import batch_create_disciplines_presenter
+from src.modules.create_discipline.app.create_discipline_presenter import create_discipline_presenter
+from src.modules.create_exercise.app.create_exercise_presenter import create_exercise_presenter
+from src.modules.batch_create_users.app.batch_create_users_presenter import batch_create_users_presenter
+from src.modules.create_user.app.create_user_presenter import create_user_presenter
+from src.modules.delete_discipline.app.delete_discipline_presenter import delete_discipline_presenter
 from src.modules.create_answer.app.create_answer_presenter import create_answer_presenter
 from src.modules.create_exercise.app.create_exercise_presenter import create_exercise_presenter
 from src.modules.batch_create_users.app.batch_create_users_presenter import batch_create_users_presenter
@@ -9,14 +15,16 @@ from src.modules.create_user.app.create_user_presenter import create_user_presen
 from src.modules.delete_answer.app.delete_answer_presenter import delete_answer_presenter
 from src.modules.delete_exercise.app.delete_exercise_presenter import delete_exercise_presenter
 from src.modules.delete_user.app.delete_user_presenter import delete_user_presenter
+from src.modules.get_all_disciplines.app.get_all_disciplines_presenter import get_all_disciplines_presenter
 from src.modules.get_all_exercises.app.get_all_exercises_presenter import get_all_exercises_presenter
+from src.modules.get_discipline.app.get_discipline_presenter import get_discipline_presenter
 from src.modules.get_answer.app.get_answer_presenter import get_answer_presenter
 from src.modules.get_answers.app.get_answers_presenter import get_answers_presenter
 from src.modules.get_exercise.app.get_exercise_presenter import get_exercise_presenter
 from src.modules.get_ranking.app.get_ranking_presenter import get_ranking_presenter
-
 from src.modules.get_schedule.app.get_schedule_presenter import get_shedule_presenter
 from src.modules.get_user.app.get_user_presenter import get_user_presenter
+from src.modules.update_discipline.app.update_discipline_presenter import update_discipline_presenter
 from src.modules.update_answer.app.update_answer_presenter import update_answer_presenter
 from src.modules.update_exercise.app.update_exercise_presenter import update_exercise_presenter
 from src.modules.update_schedule.app.update_schedule_presenter import update_schedule_presenter
@@ -214,6 +222,8 @@ def update_exercise(data: dict = None):
     }
   }
   response = update_exercise_presenter(event, None)
+  
+  return response
 
 @app.post("/batch_create_users", status_code=status.HTTP_201_CREATED)
 def batch_create_users(file: UploadFile = File(...)):
@@ -234,6 +244,70 @@ def batch_create_users(file: UploadFile = File(...)):
 
   return response
 
+# Discipline
+
+@app.post("/batch_create_disciplines", status_code=status.HTTP_201_CREATED)
+def batch_create_disciplines(file: UploadFile = File(...)):
+  if file is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  elif file.filename.split(".")[-1] != "csv":
+    raise HTTPException(status_code=400, detail="File should be csv format")
+  csvReader = csv.DictReader(codecs.iterdecode(file.file, 'utf-8'))
+  event = {
+    "body": {
+      "disciplines": []
+    }
+  }
+  for row in csvReader:
+    event["body"]["disciplines"].append(row)
+    
+  response = batch_create_disciplines_presenter(event, None)
+
+  return response
+
+@app.get("/get_all_disciplines")
+def get_all_disciplines():
+  event = {}
+  
+  response = get_all_disciplines_presenter(event, None)
+  
+  return response
+
+@app.get("/get_discipline")
+def get_discipline(discipline_id: str = None):
+  if discipline_id is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"discipline_id": discipline_id}
+  }
+  
+  response = get_discipline_presenter(request, None)
+  
+  return response
+
+@app.delete("/delete_discipline")
+def delete_discipline(discipline_id: str = None):
+  if discipline_id is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"discipline_id": discipline_id}
+  }
+  
+  response = delete_discipline_presenter(request, None)
+  
+  return response
+
+@app.post("/create_discipline", status_code=status.HTTP_201_CREATED)
+def create_discipline(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+    
 @app.get("/get_answers", status_code=status.HTTP_200_OK)
 def get_answers(data: dict = None):
   if data is None:
@@ -248,6 +322,24 @@ def get_answers(data: dict = None):
   response = get_answers_presenter(event, None)
   
   return response
+
+@app.patch("/update_discipline")
+def update_discipline(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  }  
+  for key in data.keys():
+    if type(data[key]) == dict:
+      event["body"][key] = {
+        k: str(v) for k, v in data[key].items()
+      }
+  
+  response = update_answer_presenter(event, None)
+  
+  return response
+
+# Answer
+
 
 @app.post("/create_answer", status_code=status.HTTP_201_CREATED)
 def create_answer(data: dict = None):
@@ -289,19 +381,13 @@ def delete_answer(data: dict = None):
 def update_answer(data: dict = None):
   if data is None:
     raise HTTPException(status_code=400, detail="Invalid request body")
-  
   event = {
     "body": {
         k: v for k, v in data.items()
     }
-  }  
-  for key in data.keys():
-    if type(data[key]) == dict:
-      event["body"][key] = {
-        k: str(v) for k, v in data[key].items()
-      }
+  }
   
-  response = update_answer_presenter(event, None)
+  response = create_discipline_presenter(event, None)
   
   return response
 
@@ -309,13 +395,10 @@ def update_answer(data: dict = None):
 def get_answer(data: dict = None):
   if data is None:
     raise HTTPException(status_code=400, detail="Invalid request body")
-  
   event = {
     "body": {
         k: v for k, v in data.items()
     }
-  }  
   response = get_answer_presenter(event, None)
   
   return response
-
