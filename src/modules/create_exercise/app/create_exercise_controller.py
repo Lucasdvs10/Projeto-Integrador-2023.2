@@ -3,6 +3,7 @@ from .create_exercise_viewmodel import CreateExerciseViewmodel
 from src.shared.domain.entities.exercise import Exercise
 from src.shared.helpers.external_interfaces.external_interface import IRequest, IResponse
 from fastapi import HTTPException, status
+import uuid
 
 from src.shared.helpers.external_interfaces.http_codes import Created
 
@@ -12,7 +13,7 @@ class CreateExerciseController:
         
     def __call__(self, request: IRequest) -> IResponse:
         if request.data.get('exercise_id') is None:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Exercise id is required")
+            request.data['exercise_id'] = str(uuid.uuid4())
         if type(request.data.get('exercise_id')) != str:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Exercise id must be a string")
         

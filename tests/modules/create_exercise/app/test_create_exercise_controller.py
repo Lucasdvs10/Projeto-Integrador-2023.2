@@ -49,10 +49,10 @@ class Test_CreateExerciseController:
             "correct_answer": "Answer 1"
         })
         
-        with pytest.raises(HTTPException) as exc:
-            controller(request)
-        assert exc.value.status_code == 400
-        assert exc.value.detail == "Exercise id is required"
+        response = controller(request)
+        
+        assert response.status_code == 201
+        assert response.body["exercise"]["exercise_id"]
         
     def test_create_exercise_controller_invalid_exercise_id(self):
         repo = ExerciseRepositoryMock()
