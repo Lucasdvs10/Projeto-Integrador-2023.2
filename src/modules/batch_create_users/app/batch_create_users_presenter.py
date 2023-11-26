@@ -1,11 +1,10 @@
 from .batch_create_users_controller import BatchCreateUsersController
 from .batch_create_users_usecase import BatchCreateUsersUsecase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
-
+from src.shared.environments import Environments
 
 def batch_create_users_presenter(event, context):
-    repo = UserRepositoryMock()
+    repo = Environments.get_user_repo()()
     usecase = BatchCreateUsersUsecase(repo)
     controller = BatchCreateUsersController(usecase)
     
