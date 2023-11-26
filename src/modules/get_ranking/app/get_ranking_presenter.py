@@ -1,11 +1,10 @@
 from .get_ranking_controller import GetRankingController
 from .get_ranking_usecase import GetRankingUsecase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
-
+from src.shared.environments import Environments
 
 def get_ranking_presenter(event, context):
-  repo = UserRepositoryMock()
+  repo = Environments.get_user_repo()()
   usecase = GetRankingUsecase(repo)
   controller = GetRankingController(usecase)
   

@@ -1,11 +1,10 @@
 from .update_user_controller import UpdateUserController
 from .update_user_usecase import UpdateUserUsecase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
-
+from src.shared.environments import Environments
 
 def update_user_presenter(event, context):
-    repo = UserRepositoryMock()
+    repo = Environments.get_user_repo()()
     usecase = UpdateUserUsecase(repo)
     controller = UpdateUserController(usecase)
 
