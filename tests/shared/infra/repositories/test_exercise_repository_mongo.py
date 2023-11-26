@@ -42,7 +42,7 @@ class Test_ExerciseRepositoryMongo:
     @pytest.mark.skip(reason="Not implemented yet")
     def test_update_exercise_by_id(self):
         repo = ExerciseRepositoryMongo()
-        resp = repo.update_exercise_by_id("test_id", new_title="new_test_title")
+        resp = repo.update_exercise_by_id(exercise_id="test_id", new_title="new_test_title", new_correct_answer="new_test_correct_answer", new_enunciado="new_test_enunciado", new_expiration_date=1620050000000, new_creation_date=1620000000000)
         
         assert resp.title == "new_test_title"
         assert repo.get_exercise_by_id("test_id").title == "new_test_title"

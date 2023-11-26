@@ -29,12 +29,14 @@ class ExerciseRepositoryMongo(IExerciseRepository):
             resp = ExerciseMongoDTO.from_mongo(item).to_entity()
         return resp
     
-    def update_exercise_by_id(self, exercise_id: str, new_title: Optional[str] = None, new_enunciado: Optional[str] = None, new_expiration_date: Optional[int] = None, new_correct_answer: Optional[str] = None):
+    def update_exercise_by_id(self, exercise_id: str, new_title: Optional[str] = None, new_enunciado: Optional[str] = None, new_creation_date: Optional[int] = None, new_expiration_date: Optional[int] = None, new_correct_answer: Optional[str] = None):
         updated_dict = {}
         if new_title is not None:
             updated_dict['title'] = new_title
         if new_enunciado is not None:
             updated_dict['enunciado'] = new_enunciado
+        if new_creation_date is not None:
+            updated_dict['creation_date'] = new_creation_date
         if new_expiration_date is not None:
             updated_dict['expiration_date'] = new_expiration_date
         if new_correct_answer is not None:
