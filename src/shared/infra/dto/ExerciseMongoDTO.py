@@ -33,7 +33,7 @@ class ExerciseMongoDTO:
         
     @staticmethod
     def from_mongo(exercise: dict) -> 'ExerciseMongoDTO':
-        return ExerciseMongoDTO(exercise['exercise_id'], exercise['title'], exercise['enunciado'], exercise['creation_date'], exercise['expiration_date'], exercise['correct_answer'])
+        return ExerciseMongoDTO(exercise['exercise_id'], exercise['title'], exercise['enunciado'], int(exercise['creation_date']), int(exercise['expiration_date']), exercise['correct_answer'])
     
     def to_entity(self) -> Exercise:
         return Exercise(self.exercise_id, self.title, self.enunciado, self.creation_date, self.expiration_date, self.correct_answer)
