@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 from src.shared.domain.entities.user import User
 from src.shared.domain.repositories.user_repository_interface import IUserRepository
 from pymongo.mongo_client import MongoClient
@@ -30,7 +30,7 @@ class UserRepositoryMongo(IUserRepository):
             resp = UserMongoDTO.from_mongo(item).to_entity()
         return resp
     
-    def update_user_by_email(self, email: str, new_name: str | None = None, new_role: str | None = None, new_password: str | None = None, new_exercises_solved: list | None = None):
+    def update_user_by_email(self, email: str, new_name: Optional[str] = None, new_role: Optional[str] = None, new_password: Optional[str] = None, new_exercises_solved: Optional[List[str]] = None):
         updated_dict = {}
         if new_name is not None:
             updated_dict['name'] = new_name
