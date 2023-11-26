@@ -58,14 +58,11 @@ class Environments:
 
     @staticmethod
     def get_user_repo() -> IUserRepository:
-        if Environments.get_envs().stage == STAGE.TEST:
-            from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
-            return UserRepositoryMock
-        elif Environments.get_envs().stage in [STAGE.DEV, STAGE.HOMOLOG, STAGE.PROD]:
+        if Environments.get_envs().stage in [STAGE.DEV, STAGE.HOMOLOG, STAGE.PROD]:
             from src.shared.infra.repositories.user_repository_mongo import UserRepositoryMongo
             return UserRepositoryMongo
-        else:
-            raise Exception("No repository found for this stage")
+        from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
+        return UserRepositoryMock
         
     @staticmethod
     def get_envs() -> "Environments":
