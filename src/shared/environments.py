@@ -1,8 +1,5 @@
-import enum
 from enum import Enum
 import os
-from src.shared.domain.observability.observability_interface import IObservability
-
 from src.shared.domain.repositories.user_repository_interface import IUserRepository
 
 
@@ -22,14 +19,13 @@ class Environments:
 
     """
     stage: STAGE
-    s3_bucket_name: str
-    region: str
-    endpoint_url: str = None
-    dynamo_table_name: str
-    dynamo_partition_key: str
-    dynamo_sort_key: str
-    cloud_frontget_user_presenter_distribution_domain: str
-    mss_name: str 
+    uri: str
+    db_name: str
+    user_collection: str
+    discipline_collection: str
+    exercise_collection: str
+    answer_collection: str
+    schedule_collection: str
 
     def _configure_local(self):
         from dotenv import load_dotenv
@@ -41,25 +37,24 @@ class Environments:
             self._configure_local()
 
         self.stage = STAGE[os.environ.get("STAGE")]
-        self.mss_name = os.environ.get("MSS_NAME")
         
         if self.stage == STAGE.TEST:
-            self.s3_bucket_name = "bucket-test"
-            self.region = "sa-east-1"
-            self.endpoint_url = "http://localhost:8000"
-            self.dynamo_table_name = "user_mss_template-table"
-            self.dynamo_partition_key = "PK"
-            self.dynamo_sort_key = "SK"
-            self.cloud_front_distribution_domain = "https://d3q9q9q9q9q9q9.cloudfront.net"
+            self.uri = "mongodb://localhost:27017"
+            self.db_name = "monitoria"
+            self.user_collection = "users"
+            self.discipline_collection = "disciplines"
+            self.exercise_collection = "exercises"
+            self.answer_collection = "answers"
+            self.schedule_collection = "schedules"
 
         else:
-            self.s3_bucket_name = os.environ.get("S3_BUCKET_NAME")
-            self.region = os.environ.get("REGION")
-            self.endpoint_url = os.environ.get("ENDPOINT_URL")
-            self.dynamo_table_name = os.environ.get("DYNAMO_TABLE_NAME")
-            self.dynamo_partition_key = os.environ.get("DYNAMO_PARTITION_KEY")
-            self.dynamo_sort_key = os.environ.get("DYNAMO_SORT_KEY")
-            self.cloud_front_distribution_domain = os.environ.get("CLOUD_FRONT_DISTRIBUTION_DOMAIN")
+            self.uri = os.environ.get("MONGODB-URI")
+            self.db_name = os.environ.get("MONGODB-NAME") if os.environ.get("MONGODB-NAME") else "monitoria"
+            self.user_collection = os.environ.get("MONGODB-USER-COLLECTION") if os.environ.get("MONGODB-USER-COLLECTION") else "users"
+            self.discipline_collection = os.environ.get("MONGODB-DISCIPLINE-COLLECTION") if os.environ.get("MONGODB-DISCIPLINE-COLLECTION") else "disciplines"
+            self.exercise_collection = os.environ.get("MONGODB-EXERCISE-COLLECTION") if os.environ.get("MONGODB-EXERCISE-COLLECTION") else "exercises"
+            self.answer_collection = os.environ.get("MONGODB-ANSWER-COLLECTION") if os.environ.get("MONGODB-ANSWER-COLLECTION") else "answers"
+            self.schedule_collection = os.environ.get("MONGODB-SCHEDULE-COLLECTION") if os.environ.get("MONGODB-SCHEDULE-COLLECTION") else "schedules"
 
     @staticmethod
     def get_user_repo() -> IUserRepository:
@@ -67,21 +62,11 @@ class Environments:
             from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
             return UserRepositoryMock
         elif Environments.get_envs().stage in [STAGE.DEV, STAGE.HOMOLOG, STAGE.PROD]:
-            from src.shared.infra.repositories.user_repository_dynamo import UserRepositoryDynamo
-            return UserRepositoryDynamo
+            from src.shared.infra.repositories.user_repository_mongo import UserRepositoryMongo
+            return UserRepositoryMongo
         else:
             raise Exception("No repository found for this stage")
-
-    @staticmethod
-    def get_observability() -> IObservability:
-        if Environments.get_envs().stage == STAGE.TEST:
-            from src.shared.infra.external.observability.observability_mock import ObservabilityMock
-            return ObservabilityMock
-        elif Environments.get_envs().stage in [STAGE.DEV, STAGE.HOMOLOG, STAGE.PROD]:
-            from src.shared.infra.external.observability.observability_aws import ObservabilityAWS
-            return ObservabilityAWS
-        else:
-            raise Exception("No observability class found for this stage")
+        
     @staticmethod
     def get_envs() -> "Environments":
         """
