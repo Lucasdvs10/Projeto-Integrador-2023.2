@@ -1,11 +1,10 @@
 from .update_exercise_controller import UpdateExerciseController
 from .update_exercise_usecase import UpdateExerciseUsecase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.exercise_repository_mock import ExerciseRepositoryMock
-
+from src.shared.environments import Environments
 
 def update_exercise_presenter(event, context):
-    repo = ExerciseRepositoryMock()
+    repo = Environments.get_exercise_repo()()
     usecase = UpdateExerciseUsecase(repo)
     controller = UpdateExerciseController(usecase)
 

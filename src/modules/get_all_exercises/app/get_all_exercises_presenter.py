@@ -1,11 +1,10 @@
+from src.shared.environments import Environments
 from .get_all_exercises_controller import GetAllExercisesController
 from .get_all_exercises_usecase import GetAllExercisesUsecase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.exercise_repository_mock import ExerciseRepositoryMock
-
 
 def get_all_exercises_presenter(event, context):
-    repo = ExerciseRepositoryMock()
+    repo = Environments.get_exercise_repo()()
     usecase = GetAllExercisesUsecase(repo)
     controller = GetAllExercisesController(usecase)
     
