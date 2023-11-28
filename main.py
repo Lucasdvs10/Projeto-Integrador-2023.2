@@ -29,8 +29,24 @@ from src.modules.update_answer.app.update_answer_presenter import update_answer_
 from src.modules.update_exercise.app.update_exercise_presenter import update_exercise_presenter
 from src.modules.update_schedule.app.update_schedule_presenter import update_schedule_presenter
 from src.modules.update_user.app.update_user_presenter import update_user_presenter
-
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8000",
+    "http://localhost:44297",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
