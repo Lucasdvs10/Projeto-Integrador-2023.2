@@ -1,10 +1,10 @@
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.discipline_repository_mock import DisciplineRepositoryMock
+from src.shared.environments import Environments
 from .delete_discipline_usecase import DeleteDisciplineUsecase
 from .delete_discipline_controller import DeleteDisciplineController
 
 def delete_discipline_presenter(event, context):
-    repo = DisciplineRepositoryMock()
+    repo = Environments.get_discipline_repo()()
     usecase = DeleteDisciplineUsecase(repo)
     controller = DeleteDisciplineController(usecase)
 
