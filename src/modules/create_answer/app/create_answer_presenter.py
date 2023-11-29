@@ -5,8 +5,9 @@ from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPI
 
 
 def create_answer_presenter(event, context):
-    repo = Environments.get_answer_repo()()
-    usecase = CreateAnswerUsecase(repo)
+    answer_repo = Environments.get_answer_repo()()
+    exercise_repo = Environments.get_exercise_repo()()
+    usecase = CreateAnswerUsecase(answer_repo, exercise_repo)
     controller = CreateAnswerController(usecase)
     
     httpRequest = FastAPIHttpRequest(data=event)
