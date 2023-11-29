@@ -42,20 +42,22 @@ class AnswerRepositoryMongo(IAnswerRepository):
       resp = AnswerMongoDTO.from_mongo(item).to_entity()
     return resp
   
-  def update_answer(self, answer_id: str, new_content: Optional[str] = None, new_is_right: Optional[bool] = None):
+  def update_answer(self, answer_id: str, new_content: Optional[str], new_email: Optional[str], new_is_right: Optional[int]):
     updated_dict = {}
     if new_content is not None:
       updated_dict['content'] = new_content
+    if new_email is not None:
+      updated_dict['email'] = new_email
     if new_is_right is not None:
       updated_dict['is_right'] = new_is_right
       
-    item = self.collection.find_one_and_update({"_id": answer_id}, {"$set": updated_dict}, return_document=True)
+    item = self.collection.find_one_and_update({"answer_id": answer_id}, {"$set": updated_dict}, return_document=True)
     
     return AnswerMongoDTO.from_mongo(item).to_entity()
   
   def delete_answer(self, answer_id: str) -> Answer:
-    item = self.collection.find_one({"_id": answer_id})
-    self.collection.delete_one({"_id": answer_id})
+    item = self.collection.find_one({"answer_id": answer_id})
+    self.collection.delete_one({"answer_id": answer_id})
     return AnswerMongoDTO.from_mongo(item).to_entity()
   
   def get_schedule(self) -> Schedule:
