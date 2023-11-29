@@ -9,6 +9,7 @@ from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
 
 from src.shared.infra.dto.AnswerMongoDTO import AnswerMongoDTO
+from src.shared.infra.dto.ScheduleMongoDTO import ScheduleMongoDTO
 
 load_dotenv()
 env = os.environ
@@ -61,10 +62,10 @@ class AnswerRepositoryMongo(IAnswerRepository):
     return AnswerMongoDTO.from_mongo(item).to_entity()
   
   def get_schedule(self) -> Schedule:
-    item = self.collection_schedule.find()
+    item = self.collection_schedule.find_one({})
     resp = None
     if item is not None:
-      resp = Schedule.from_mongo(item)
+      resp = ScheduleMongoDTO.from_mongo(item).to_entity()
     return resp
   
   def update_schedule(self, new_url: str) -> Schedule:
@@ -74,8 +75,8 @@ class AnswerRepositoryMongo(IAnswerRepository):
       
     item = self.collection_schedule.find_one_and_update({}, {"$set": updated_dict}, return_document=True)
     
-    return Schedule.from_mongo(item)
-  
-    
-    
-  
+    if item is None:
+      item = self.collection_schedule.insert_one({"url": new_url})
+      item = self.collection_schedule.find_one({"_id": item.inserted_id})
+          
+    return ScheduleMongoDTO.from_mongo(item).to_entity()
