@@ -408,15 +408,16 @@ def update_answer(data: dict = None):
   return response
 
 @app.get("/get_answer", status_code=status.HTTP_200_OK)
-def get_answer(data: dict = None):
-  if data is None:
+def get_answer(answer_id: str = None):
+  if answer_id is None:
     raise HTTPException(status_code=400, detail="Invalid request body")
-  event = {
-    "body": {
-        k: v for k, v in data.items()
-    }
+  
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"answer_id": answer_id}
   }
   
-  response = get_answer_presenter(event, None)
+  response = get_answer_presenter(request, None)
   
   return response
