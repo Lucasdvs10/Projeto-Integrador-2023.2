@@ -29,8 +29,18 @@ from src.modules.update_answer.app.update_answer_presenter import update_answer_
 from src.modules.update_exercise.app.update_exercise_presenter import update_exercise_presenter
 from src.modules.update_schedule.app.update_schedule_presenter import update_schedule_presenter
 from src.modules.update_user.app.update_user_presenter import update_user_presenter
-
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
@@ -81,7 +91,7 @@ def get_ranking():
   
   return response
 
-@app.put("/create_user", status_code=status.HTTP_201_CREATED)
+@app.post("/create_user", status_code=status.HTTP_201_CREATED)
 def create_user(data: dict = None):
   if data is None:
     raise HTTPException(status_code=400, detail="Invalid request body")
@@ -121,14 +131,14 @@ def update_user(data: dict = None):
   
   event = {
     "body": {
-        k: str(v) for k, v in data.items()
+        k: v for k, v in data.items()
     }
   }
   
   for key in data.keys():
     if type(data[key]) == dict:
       event["body"][key] = {
-        k: str(v) for k, v in data[key].items()
+        k: v for k, v in data[key].items()
       }
     
   response = update_user_presenter(event, None)
@@ -327,11 +337,13 @@ def get_answers(data: dict = None):
 def update_discipline(data: dict = None):
   if data is None:
     raise HTTPException(status_code=400, detail="Invalid request body")
+  
   event = {
     "body": {
         k: v for k, v in data.items()
     }
   }
+  
   for key in data.keys():
     if type(data[key]) == dict:
       event["body"][key] = {
@@ -404,6 +416,7 @@ def get_answer(data: dict = None):
         k: v for k, v in data.items()
     }
   }
+  
   response = get_answer_presenter(event, None)
   
   return response

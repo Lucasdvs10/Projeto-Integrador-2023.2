@@ -1,6 +1,7 @@
 from enum import Enum
 import os
 from src.shared.domain.repositories.answer_repository_interface import IAnswerRepository
+from src.shared.domain.repositories.exercise_repository_interface import IExerciseRepository
 from src.shared.domain.repositories.user_repository_interface import IUserRepository
 
 
@@ -72,6 +73,14 @@ class Environments:
             return AnswerRepositoryMongo
         from src.shared.infra.repositories.answer_repository_mock import AnswerRepositoryMock
         return AnswerRepositoryMock
+    
+    @staticmethod
+    def get_exercise_repo() -> IExerciseRepository:
+        if Environments.get_envs().stage in [STAGE.DEV, STAGE.HOMOLOG, STAGE.PROD]:
+            from src.shared.infra.repositories.exercise_repository_mongo import ExerciseRepositoryMongo
+            return ExerciseRepositoryMongo
+        from src.shared.infra.repositories.exercise_repository_mock import ExerciseRepositoryMock
+        return ExerciseRepositoryMock
         
     @staticmethod
     def get_envs() -> "Environments":
