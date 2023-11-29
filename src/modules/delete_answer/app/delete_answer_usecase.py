@@ -6,7 +6,7 @@ class DeleteAnswerUsecase:
         self.repo = repo
         
     def __call__(self, answer_id: str):
-        answer = self.repo.delete_answer(answer_id)
+        answer = self.repo.get_answer(answer_id)
         if not answer:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Answer not found")
-        return answer
+        return self.repo.delete_answer(answer_id)
