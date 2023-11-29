@@ -32,18 +32,12 @@ from src.modules.update_user.app.update_user_presenter import update_user_presen
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
-origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
-    "http://localhost",
-    "http://localhost:8000",
-    "http://localhost:44297",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
