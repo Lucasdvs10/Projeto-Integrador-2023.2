@@ -36,7 +36,7 @@ class AnswerRepositoryMongo(IAnswerRepository):
     return resp
   
   def get_answer(self, answer_id: str) -> Answer:
-    item = self.collection.find_one({"_id": answer_id})
+    item = self.collection.find_one({"answer_id": answer_id})
     resp = None
     if item is not None:
       resp = AnswerMongoDTO.from_mongo(item).to_entity()

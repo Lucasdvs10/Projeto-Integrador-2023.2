@@ -4,7 +4,7 @@ from src.modules.get_answer.app.get_answer_presenter import get_answer_presenter
 class Test_GetAnswerPresenter:
     def test_get_answer_presenter(self):
         event = {
-            'body' : {"answer_id": "0"}
+            'body' : {"answer_id": "1"}
         }
         
         response = get_answer_presenter(event, None)
