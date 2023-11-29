@@ -4,7 +4,7 @@ from src.shared.domain.repositories.user_repository_interface import IUserReposi
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
-from src.shared.infra.dto.AnswerMongoDTO import UserMongoDTO
+from src.shared.infra.dto.UserMongoDTO import UserMongoDTO
 from dotenv import load_dotenv
 
 load_dotenv()
