@@ -1,3 +1,6 @@
+import uuid
+
+from src.shared.domain.entities.user import User
 from .create_answer_usecase import CreateAnswerUsecase
 from .create_answer_viewmodel import CreateAnswerViewmodel
 from src.shared.domain.entities.answer import Answer
@@ -12,7 +15,7 @@ class CreateAnswerController:
         
     def __call__(self, request: IRequest) -> IResponse:
         if request.data.get('answer_id') is None:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Answer id is required")
+            request.data['answer_id'] = str(uuid.uuid4())
         if type(request.data.get('answer_id')) != str:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Answer id must be a string")
         
@@ -23,20 +26,22 @@ class CreateAnswerController:
         
         if request.data.get('email') is None:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is required")
-        if type(request.data.get('email')) != str:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email must be a string")
+        if not User.validate_email(request.data.get('email')):
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is not valid")
 
         if request.data.get('content') is None:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Enunciado is required")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Content is required")
         if type(request.data.get('content')) != str:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Enunciado must be a string")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Content must be a string")
         if not Answer.MIN_CONTENT_LENGTH <= len(request.data.get('content')) <= Answer.MAX_CONTENT_LENGTH:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Enunciado must have between {Answer.MIN_CONTENT_LENGTH} and {Answer.MAX_CONTENT_LENGTH} characters")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Content must have between {Answer.MIN_CONTENT_LENGTH} and {Answer.MAX_CONTENT_LENGTH} characters")
         
         if request.data.get('is_right') is None:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Creation date is required")
+            request.data['is_right'] = 0
         if type(request.data.get('is_right')) != int:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Creation date must be a decimal string")        
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Creation date must be a decimal string")   
+        if request.data.get('is_right') not in [0, 1]:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Is right must be 0 or 1")     
         
         answer = self.usecase(
             answer_id=request.data.get('answer_id'),

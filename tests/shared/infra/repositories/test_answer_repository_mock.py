@@ -73,7 +73,7 @@ class Test_AnswerRepositoryMock:
     
     old_len = len(repo.all_answers)
     
-    repo.delete_answer_by_id("1")
+    repo.delete_answer("1")
     
     assert old_len == 8
     assert len(repo.all_answers) == 7
