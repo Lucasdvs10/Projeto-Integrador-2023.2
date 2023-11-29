@@ -1,11 +1,11 @@
 from .batch_create_disciplines_controller import BatchCreateDisciplinesController
 from .batch_create_disciplines_usecase import BatchCreateDisciplinesUseCase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.discipline_repository_mock import DisciplineRepositoryMock
+from src.shared.environments import Environments
 
 
 def batch_create_disciplines_presenter(event, context):
-    repo = DisciplineRepositoryMock()
+    repo = Environments.get_discipline_repo()()
     usecase = BatchCreateDisciplinesUseCase(repo)
     controller = BatchCreateDisciplinesController(usecase)
     

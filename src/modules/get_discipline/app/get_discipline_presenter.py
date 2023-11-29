@@ -1,10 +1,10 @@
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.discipline_repository_mock import DisciplineRepositoryMock
+from src.shared.environments import Environments
 from .get_discipline_usecase import GetDisciplineUsecase
 from .get_discipline_controller import GetDisciplineController
 
 def get_discipline_presenter(event, context):
-    repo = DisciplineRepositoryMock()
+    repo = Environments.get_discipline_repo()()
     usecase = GetDisciplineUsecase(repo)
     controller = GetDisciplineController(usecase)
 
