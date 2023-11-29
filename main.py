@@ -97,7 +97,7 @@ def get_ranking():
   
   return response
 
-@app.put("/create_user", status_code=status.HTTP_201_CREATED)
+@app.post("/create_user", status_code=status.HTTP_201_CREATED)
 def create_user(data: dict = None):
   if data is None:
     raise HTTPException(status_code=400, detail="Invalid request body")
