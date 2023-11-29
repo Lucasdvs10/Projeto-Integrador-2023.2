@@ -1,11 +1,10 @@
 from .delete_answer_controller import DeleteAnswerController
 from .delete_answer_usecase import DeleteAnswerUsecase
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.answer_repository_mock import AnswerRepositoryMock
-
+from src.shared.environments import Environments
 
 def delete_answer_presenter(event, context):
-    repo = AnswerRepositoryMock()
+    repo = Environments.get_answer_repo()()
     usecase = DeleteAnswerUsecase(repo)
     controller = DeleteAnswerController(usecase)
     
