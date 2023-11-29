@@ -1,5 +1,6 @@
 from enum import Enum
 import os
+from src.shared.domain.repositories.answer_repository_interface import IAnswerRepository
 from src.shared.domain.repositories.user_repository_interface import IUserRepository
 
 
@@ -63,6 +64,14 @@ class Environments:
             return UserRepositoryMongo
         from src.shared.infra.repositories.user_repository_mock import UserRepositoryMock
         return UserRepositoryMock
+    
+    @staticmethod
+    def get_answer_repo() -> IAnswerRepository:
+        if Environments.get_envs().stage in [STAGE.DEV, STAGE.HOMOLOG, STAGE.PROD]:
+            from src.shared.infra.repositories.answer_repository_mongo import AnswerRepositoryMongo
+            return AnswerRepositoryMongo
+        from src.shared.infra.repositories.answer_repository_mock import AnswerRepositoryMock
+        return AnswerRepositoryMock
         
     @staticmethod
     def get_envs() -> "Environments":

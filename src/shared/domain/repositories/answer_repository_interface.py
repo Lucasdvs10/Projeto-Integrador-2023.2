@@ -23,7 +23,7 @@ class IAnswerRepository:
     pass
   
   @abc.abstractmethod
-  def delete_answer_by_id(self, answer_id: str) -> Answer:
+  def delete_answer(self, answer_id: str) -> Answer:
     pass
 
   @abc.abstractmethod

@@ -59,7 +59,7 @@ class AnswerRepositoryMock(IAnswerRepository):
         return answer
     return None   
   
-  def delete_answer_by_id(self, answer_id: str) -> Answer:
+  def delete_answer(self, answer_id: str) -> Answer:
     for answer in self.all_answers:
       if (answer.answer_id == answer_id):
         self.all_answers.remove(answer)

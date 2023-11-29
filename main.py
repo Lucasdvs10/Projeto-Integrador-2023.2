@@ -327,7 +327,11 @@ def get_answers(data: dict = None):
 def update_discipline(data: dict = None):
   if data is None:
     raise HTTPException(status_code=400, detail="Invalid request body")
-  }  
+  event = {
+    "body": {
+        k: v for k, v in data.items()
+    }
+  }
   for key in data.keys():
     if type(data[key]) == dict:
       event["body"][key] = {
@@ -399,6 +403,7 @@ def get_answer(data: dict = None):
     "body": {
         k: v for k, v in data.items()
     }
+  }
   response = get_answer_presenter(event, None)
   
   return response

@@ -202,3 +202,5 @@ class Test_UpdateAnswerController:
         
         assert exc.value.status_code == 400
         assert exc.value.detail == "New is right must be an integer"
+        
+        
