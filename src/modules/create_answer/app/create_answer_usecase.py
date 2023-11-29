@@ -7,5 +7,7 @@ class CreateAnswerUsecase:
         self.repo = repo
         
     def __call__(self, answer_id, exercise_id: str, email: str, content: str, is_right: int):        
+        if self.repo.get_answer(answer_id):
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Answer already exists")
         answer = Answer(answer_id, exercise_id, email, content, is_right)
         return self.repo.create_answer(answer)
