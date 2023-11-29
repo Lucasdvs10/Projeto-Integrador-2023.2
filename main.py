@@ -50,6 +50,11 @@ async def http_exception_handler(request, exc):
 async def exception_handler(request, exc):
   return JSONResponse(status_code=500, content=str(exc))
 
+
+@app.get("/")
+def read_root():
+  return {"message" : "Monitoria API is running!"}
+
 # Schedule
 
 @app.get("/get_schedule")
