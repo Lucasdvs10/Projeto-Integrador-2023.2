@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from src.shared.domain.entities.schedule import Schedule
 from src.shared.domain.repositories.answer_repository_interface import IAnswerRepository
 from src.shared.domain.entities.answer import Answer
@@ -7,7 +7,7 @@ from src.shared.domain.entities.exercise import Exercise
 class AnswerRepositoryMock(IAnswerRepository):
   def __init__(self):
     self.all_answers = [
-      Answer("0", "111-111-111", "umemail@gmail.com", "A resposta vem aqui!", 0),
+      Answer("0", "111-111-111", "22.01049-0@maua.br", "A resposta vem aqui!", 0),
       Answer("1", "111-111-111", "outro@gmail.com", "content", 1),
       Answer("2", "111-111-111", "maisum@gmail.com", "content", 0),
       Answer("3", "111-111-111", "olhaoutroaqui@gmail.com", "content", 1),
