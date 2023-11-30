@@ -50,14 +50,15 @@ class AnswerRepositoryMock(IAnswerRepository):
         return answer
     return None
   
-  def update_answer(self, answer_id: str, new_content: str, new_email: str, new_is_right: int) -> Answer:
-    for answer in self.all_answers:
-      if (answer.answer_id == answer_id):
-        answer.content = new_content
-        answer.email = new_email
-        answer.is_right = new_is_right
-        return answer
-    return None   
+  def update_answer(self, answer_id: str, new_content: Optional[str] = None, new_email: Optional[str] = None, new_is_right: Optional[int] = None) -> Answer:
+    answer = self.get_answer(answer_id)
+    if new_content:
+      answer.content = new_content
+    if new_email:
+      answer.email = new_email
+    if new_is_right:
+      answer.is_right = new_is_right
+    return answer
   
   def delete_answer(self, answer_id: str) -> Answer:
     for answer in self.all_answers:
