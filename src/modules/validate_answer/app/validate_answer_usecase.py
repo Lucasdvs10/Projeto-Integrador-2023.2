@@ -7,7 +7,7 @@ class ValidateAnswerUsecase:
         self.answer_repository = answer_repository
         self.user_repository = user_repository
 
-    def __call__(self, answer_id: str):
+    def __call__(self, answer_id: str, is_right: int):
         answer = self.answer_repository.get_answer(answer_id)
         if not answer:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Answer not found")
@@ -15,8 +15,14 @@ class ValidateAnswerUsecase:
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         
-        updated_user = self.user_repository.update_user_by_email(email=answer.email, new_exercises_solved=user.exercises_solved + [answer.exercise_id])
-        
-        updated_answer = self.answer_repository.update_answer(answer_id, new_is_right=1)
+        if is_right == 1:
+            user.exercises_solved.append(answer.exercise_id)
+        else:
+            if answer.exercise_id in user.exercises_solved:
+                user.exercises_solved.remove(answer.exercise_id)
+                
+        self.user_repository.update_user_by_email(user.email, new_exercises_solved=user.exercises_solved)
+         
+        updated_answer = self.answer_repository.update_answer(answer_id, new_is_right=is_right)
 
         return updated_answer
