@@ -22,8 +22,8 @@ class Test_ValidateAnswerController:
         response = controller(request)
         
         assert response.status_code == 200
-        assert response.body.answer.answer_id == answer_repo.all_answers[0].answer_id
-        assert response.body.answer.is_right == 1
+        assert response.body["answer"]["answer_id"] == answer_repo.all_answers[0].answer_id
+        assert response.body["answer"]["is_right"] == 1
     
     def test_validate_answer_controller_missing_answer_id(self):
         answer_repo = AnswerRepositoryMock()

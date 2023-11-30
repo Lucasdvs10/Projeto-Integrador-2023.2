@@ -21,4 +21,4 @@ class ValidateAnswerController:
         
         answer = self.usecase(request.data.get("answer_id"), request.data.get("is_right"))
         viewmodel = ValidateAnswerViewmodel(answer)
-        return OK(viewmodel)
+        return OK(viewmodel.to_dict())
