@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from src.shared.domain.entities.schedule import Schedule
 from src.shared.domain.repositories.answer_repository_interface import IAnswerRepository
 from src.shared.domain.entities.answer import Answer
@@ -7,7 +7,7 @@ from src.shared.domain.entities.exercise import Exercise
 class AnswerRepositoryMock(IAnswerRepository):
   def __init__(self):
     self.all_answers = [
-      Answer("0", "111-111-111", "umemail@gmail.com", "A resposta vem aqui!", 0),
+      Answer("0", "111-111-111", "22.01049-0@maua.br", "A resposta vem aqui!", 0),
       Answer("1", "111-111-111", "outro@gmail.com", "content", 1),
       Answer("2", "111-111-111", "maisum@gmail.com", "content", 0),
       Answer("3", "111-111-111", "olhaoutroaqui@gmail.com", "content", 1),
@@ -50,14 +50,15 @@ class AnswerRepositoryMock(IAnswerRepository):
         return answer
     return None
   
-  def update_answer(self, answer_id: str, new_content: str, new_email: str, new_is_right: int) -> Answer:
-    for answer in self.all_answers:
-      if (answer.answer_id == answer_id):
-        answer.content = new_content
-        answer.email = new_email
-        answer.is_right = new_is_right
-        return answer
-    return None   
+  def update_answer(self, answer_id: str, new_content: Optional[str] = None, new_email: Optional[str] = None, new_is_right: Optional[int] = None) -> Answer:
+    answer = self.get_answer(answer_id)
+    if new_content:
+      answer.content = new_content
+    if new_email:
+      answer.email = new_email
+    if new_is_right:
+      answer.is_right = new_is_right
+    return answer
   
   def delete_answer(self, answer_id: str) -> Answer:
     for answer in self.all_answers:

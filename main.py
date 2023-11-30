@@ -30,6 +30,8 @@ from src.modules.update_exercise.app.update_exercise_presenter import update_exe
 from src.modules.update_schedule.app.update_schedule_presenter import update_schedule_presenter
 from src.modules.update_user.app.update_user_presenter import update_user_presenter
 from fastapi.middleware.cors import CORSMiddleware
+
+from src.modules.validate_answer.app.validate_answer_presenter import validate_answer_presenter
 app = FastAPI()
 
 origins = ["*"]
@@ -424,5 +426,20 @@ def get_answer(answer_id: str = None):
   }
   
   response = get_answer_presenter(request, None)
+  
+  return response
+
+@app.post("/validate_answer", status_code=status.HTTP_200_OK)
+def validate_answer(data: dict = None):
+  if data is None:
+    raise HTTPException(status_code=400, detail="Invalid request body")
+  
+  event = {
+    "body": {
+        k: v for k, v in data.items()
+    }
+  }
+  
+  response = validate_answer_presenter(event, None)
   
   return response

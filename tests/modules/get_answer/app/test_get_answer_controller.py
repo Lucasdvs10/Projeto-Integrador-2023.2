@@ -16,7 +16,7 @@ class Test_GetAnswerController:
         })
         response = controller(request)
         
-        expected = {'answer': {"answer_id": "0", "exercise_id":"111-111-111", "email":"umemail@gmail.com", "content":"A resposta vem aqui!", "is_right":0}, 'message': 'Answer retrieved successfully'}
+        expected = {'answer': {"answer_id": "0", "exercise_id":"111-111-111", "email":"22.01049-0@maua.br", "content":"A resposta vem aqui!", "is_right":0}, 'message': 'Answer retrieved successfully'}
         
         assert response.status_code == 200
         assert response.body == expected

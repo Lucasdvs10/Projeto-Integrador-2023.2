@@ -52,7 +52,7 @@ class Test_AnswerRepositoryMock:
         
     assert answer.answer_id == "0"
     assert answer.exercise_id == "111-111-111"
-    assert answer.email == "umemail@gmail.com"
+    assert answer.email == "22.01049-0@maua.br"
     assert answer.content == "A resposta vem aqui!"
     assert answer.is_right == 0
     
