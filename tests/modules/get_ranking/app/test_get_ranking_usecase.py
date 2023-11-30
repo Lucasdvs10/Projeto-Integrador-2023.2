@@ -9,6 +9,6 @@ class Test_GetRankingUsecase:
         
         ranking = usecase()
         
-        assert len(ranking) == len([user for user in repo._users if user.role.value == 'STUDENT']) if len(repo._users) < 20 else 20
+        assert len(ranking) == len([user for user in repo._users if user.role.value == 'STUDENT'])
         assert all([ranking[i][1].exercises_solved >= ranking[i+1][1].exercises_solved for i in range(len(ranking)-1)])
         assert all([ranking[i][0] == i+1 for i in range(len(ranking))])
