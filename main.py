@@ -324,17 +324,17 @@ def create_discipline(data: dict = None):
     raise HTTPException(status_code=400, detail="Invalid request body")
     
 @app.get("/get_answers", status_code=status.HTTP_200_OK)
-def get_answers(data: dict = None):
-  if data is None:
+def get_answers(exercise_id: str = None):
+  if exercise_id is None:
     raise HTTPException(status_code=400, detail="Invalid request body")
   
-  event = {
-    "body": {
-        k: v for k, v in data.items()
-    }
+  request = {
+    "body": {},
+    "headers": {},
+    "query_params" : {"exercise_id": exercise_id}
   }
   
-  response = get_answers_presenter(event, None)
+  response = get_answers_presenter(request, None)
   
   return response
 
