@@ -1,11 +1,11 @@
 from src.modules.get_answers.app.get_answers_controller import GetAnswersController
 from src.modules.get_answers.app.get_answers_usecase import GetAnswersUsecase
+from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_fastapi_requests import FastAPIHttpRequest, FastAPIHttpResponse
-from src.shared.infra.repositories.answer_repository_mock import AnswerRepositoryMock
 
 
 def get_answers_presenter(event, context):
-    repo = AnswerRepositoryMock()
+    repo = Environments.get_answer_repo()()
     usecase = GetAnswersUsecase(repo)
     controller = GetAnswersController(usecase)
     
