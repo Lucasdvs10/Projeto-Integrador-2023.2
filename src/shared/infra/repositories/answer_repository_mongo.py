@@ -43,7 +43,7 @@ class AnswerRepositoryMongo(IAnswerRepository):
       resp = AnswerMongoDTO.from_mongo(item).to_entity()
     return resp
   
-  def update_answer(self, answer_id: str, new_content: Optional[str], new_email: Optional[str], new_is_right: Optional[int]):
+  def update_answer(self, answer_id: str, new_content: Optional[str] = None, new_email: Optional[str] = None, new_is_right: Optional[int] = None):
     updated_dict = {}
     if new_content is not None:
       updated_dict['content'] = new_content

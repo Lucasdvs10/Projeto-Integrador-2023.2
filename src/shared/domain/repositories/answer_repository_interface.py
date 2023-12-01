@@ -1,5 +1,5 @@
 import abc
-from typing import List
+from typing import List, Optional
 from src.shared.domain.entities.answer import Answer
 from src.shared.domain.entities.schedule import Schedule
 
@@ -19,7 +19,7 @@ class IAnswerRepository:
     pass
   
   @abc.abstractmethod
-  def update_answer(self, answer_id: str, new_content: str, new_email: str, new_is_right: int) -> Answer:
+  def update_answer(self, answer_id: str, new_content: Optional[str], new_email: Optional[str], new_is_right: Optional[int]) -> Answer:
     pass
   
   @abc.abstractmethod

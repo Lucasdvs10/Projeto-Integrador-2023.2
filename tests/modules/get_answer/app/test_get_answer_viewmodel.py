@@ -7,6 +7,6 @@ class Test_GetAnswerViewmodel:
         repo = AnswerRepositoryMock()
         answer = repo.get_answer(repo.all_answers[0].answer_id)
         viewmodel = GetAnswerViewmodel(answer)
-        expected = {'answer': {'answer_id': "0", "exercise_id": '111-111-111', 'content': 'A resposta vem aqui!', 'email': 'umemail@gmail.com', 'is_right': 0}, 'message': 'Answer retrieved successfully'}
+        expected = {'answer': {'answer_id': "0", "exercise_id": '111-111-111', 'content': 'A resposta vem aqui!', 'email': '22.01049-0@maua.br', 'is_right': 0}, 'message': 'Answer retrieved successfully'}
         
         assert viewmodel.to_dict() == expected

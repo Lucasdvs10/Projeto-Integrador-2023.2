@@ -10,9 +10,9 @@ class CreateAnswerUsecase:
         self.exercise_repo = exercise_repo
         
     def __call__(self, answer_id, exercise_id: str, email: str, content: str, is_right: int):        
-        if self.repo.get_answer(answer_id):
+        if self.answer_repo.get_answer(answer_id):
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Answer already exists")
-        if not self.exercise_repo.get_exercise(exercise_id):
+        if not self.exercise_repo.get_exercise_by_id(exercise_id):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Exercise not found")
         answer = Answer(answer_id, exercise_id, email, content, is_right)
-        return self.repo.create_answer(answer)
+        return self.answer_repo.create_answer(answer)
