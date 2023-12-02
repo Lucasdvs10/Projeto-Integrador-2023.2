@@ -55,34 +55,3 @@ class Test_ValidateAnswerController:
             controller(request)
         assert exc.value.status_code == 400
         assert exc.value.detail == "Invalid answer_id"
-    
-    def test_validate_answer_controller_missing_is_right(self):
-        answer_repo = AnswerRepositoryMock()
-        user_repo = UserRepositoryMock()
-        usecase = ValidateAnswerUsecase(answer_repo, user_repo)
-        controller = ValidateAnswerController(usecase)
-        
-        request = HttpRequest(body={
-            "answer_id": answer_repo.all_answers[0].answer_id
-        })
-        
-        with pytest.raises(HTTPException) as exc:
-            controller(request)
-        assert exc.value.status_code == 400
-        assert exc.value.detail == "Missing is_right"
-    
-    def test_validate_answer_controller_invalid_is_right(self):
-        answer_repo = AnswerRepositoryMock()
-        user_repo = UserRepositoryMock()
-        usecase = ValidateAnswerUsecase(answer_repo, user_repo)
-        controller = ValidateAnswerController(usecase)
-        
-        request = HttpRequest(body={
-            "answer_id": answer_repo.all_answers[0].answer_id,
-            "is_right": 2
-        })
-        
-        with pytest.raises(HTTPException) as exc:
-            controller(request)
-        assert exc.value.status_code == 400
-        assert exc.value.detail == "Invalid is_right"

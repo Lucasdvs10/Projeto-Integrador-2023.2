@@ -5,8 +5,7 @@ class Test_ValidateAnswerPresenter:
     def test_validate_answer_presenter(self):
         event = {
             "body" : {
-                "answer_id": "0",
-                "is_right": 1
+                "answer_id": "0"
             }
         }
         

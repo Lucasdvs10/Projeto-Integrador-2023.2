@@ -12,8 +12,9 @@ class Test_ValidateAnswerUsecase:
         usecase = ValidateAnswerUsecase(answer_repository, user_repository)
         
         answer_id = answer_repository.all_answers[0].answer_id
+        answer_repository.all_answers[0].is_right = 0
         
-        answer = usecase(answer_id, is_right=1)
+        answer = usecase(answer_id)
         
         assert answer_repository.get_answer(answer_id).is_right == 1
         assert answer.exercise_id in user_repository.get_user_by_email(answer.email).exercises_solved 
@@ -24,8 +25,9 @@ class Test_ValidateAnswerUsecase:
         usecase = ValidateAnswerUsecase(answer_repository, user_repository)
         
         answer_id = answer_repository.all_answers[0].answer_id
+        answer_repository.all_answers[0].is_right = 1
         
-        answer = usecase(answer_id, is_right=0)
+        answer = usecase(answer_id)
         
         assert answer_repository.get_answer(answer_id).is_right == 0
         assert answer.exercise_id not in user_repository.get_user_by_email(answer.email).exercises_solved
@@ -38,7 +40,7 @@ class Test_ValidateAnswerUsecase:
         answer_id = "999"
         
         with pytest.raises(HTTPException) as exc:
-            usecase(answer_id, is_right=1)
+            usecase(answer_id)
         assert exc.value.status_code == 404
         assert exc.value.detail == "Answer not found"
         
@@ -51,6 +53,6 @@ class Test_ValidateAnswerUsecase:
         answer_repository.all_answers[0].email = "999"
         
         with pytest.raises(HTTPException) as exc:
-            usecase(answer_id, is_right=1)
+            usecase(answer_id)
         assert exc.value.status_code == 404
         assert exc.value.detail == "User not found"
