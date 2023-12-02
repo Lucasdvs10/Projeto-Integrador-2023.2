@@ -52,11 +52,11 @@ class AnswerRepositoryMock(IAnswerRepository):
   
   def update_answer(self, answer_id: str, new_content: Optional[str] = None, new_email: Optional[str] = None, new_is_right: Optional[int] = None) -> Answer:
     answer = self.get_answer(answer_id)
-    if new_content:
+    if new_content is not None:
       answer.content = new_content
-    if new_email:
+    if new_email is not None:
       answer.email = new_email
-    if new_is_right:
+    if new_is_right is not None:
       answer.is_right = new_is_right
     return answer
   
